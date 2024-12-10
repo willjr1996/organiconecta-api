@@ -4,6 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Arquivos de configuração
+*.env
+db.env
+
 ### STS ###
 .apt_generated
 .classpath
