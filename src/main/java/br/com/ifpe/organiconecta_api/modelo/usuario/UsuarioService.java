@@ -50,4 +50,14 @@ public class UsuarioService {
         repository.save(usuario);
 
    }
+
+   @Transactional
+    public String Login (String email, String senha){
+    Usuario usuario = repository.findByEmailAndSenha(email, senha);
+    
+        if(usuario !=  null){
+            return usuario.getNome();
+        }
+        return null;
+   }
 }
