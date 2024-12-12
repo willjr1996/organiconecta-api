@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.ifpe.organiconecta_api.modelo.usuario.LoginRequest;
+import br.com.ifpe.organiconecta_api.modelo.usuario.Credenciais;
 import br.com.ifpe.organiconecta_api.modelo.usuario.Usuario;
+import br.com.ifpe.organiconecta_api.modelo.usuario.UsuarioId;
 import br.com.ifpe.organiconecta_api.modelo.usuario.UsuarioService;
 import jakarta.validation.Valid;
 
@@ -52,12 +53,18 @@ public class UsuarioController {
        return ResponseEntity.ok().build();
    }
 
-   @PostMapping("/login")
-   public ResponseEntity <String> login (@RequestBody @Valid LoginRequest loginRequest){
-     String nome = usuarioService.Login(loginRequest.getEmail(), loginRequest.getSenha());
-     if(nome != null){
-        return ResponseEntity.ok("Bem Vindo " + nome + "!");
-     }
-     return ResponseEntity.status(404).body("Usuário não encontrado");
-   }
+//    @PostMapping("/login")
+//    public ResponseEntity <String> login (@RequestBody @Valid LoginRequest loginRequest){
+//      String nome = usuarioService.Login(loginRequest.getEmail(), loginRequest.getSenha());
+//      if(nome != null){
+//         return ResponseEntity.ok("Bem Vindo " + nome + "!");
+//      }
+//      return ResponseEntity.status(404).body("Usuário não encontrado");
+//    }
+
+@PostMapping("/login")
+    public ResponseEntity<UsuarioId> getIdByCredenciais(@RequestBody Credenciais credenciais) {
+        UsuarioId usuarioId = usuarioService.getIdByCredenciais(credenciais);
+        return ResponseEntity.ok(usuarioId);
+    }
 }

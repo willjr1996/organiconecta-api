@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
   @Query("SELECT u FROM  Usuario u WHERE u.email= :email AND u.senha = :senha")
   Usuario findByEmailAndSenha(String email, String senha);
+
+  @Query("SELECT u.id FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
+  Long findIdByEmailAndSenha(String email, String senha);
 }

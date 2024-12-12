@@ -1,5 +1,7 @@
 package br.com.ifpe.organiconecta_api.modelo.usuario;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,13 +53,25 @@ public class UsuarioService {
 
    }
 
-   @Transactional
-    public String Login (String email, String senha){
-    Usuario usuario = repository.findByEmailAndSenha(email, senha);
+//    @Transactional
+//     public String Login (String email, String senha){
+//     Usuario usuario = repository.findByEmailAndSenha(email, senha);
     
-        if(usuario !=  null){
-            return usuario.getNome();
+//         if(usuario !=  null){
+//             return usuario.getNome();
+//         }
+//         return null;
+//    }
+
+@Autowired
+    private UsuarioRepository usuarioRepository;
+
+    public UsuarioId getIdByCredenciais(Credenciais credenciais) {
+        Long userId = usuarioRepository.findIdByEmailAndSenha(credenciais.getEmail(), credenciais.getSenha());
+        
+        if (userId == null) {
+            throw new NoSuchElementException("Usuário não encontrado com as credenciais fornecidas.");
         }
-        return null;
-   }
+        return new UsuarioId(userId);
+    }
 }
