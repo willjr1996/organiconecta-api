@@ -63,11 +63,9 @@ public class UsuarioService {
 //         return null;
 //    }
 
-@Autowired
-    private UsuarioRepository usuarioRepository;
-
+    @Transactional
     public UsuarioId getIdByCredenciais(Credenciais credenciais) {
-        Long userId = usuarioRepository.findIdByEmailAndSenha(credenciais.getEmail(), credenciais.getSenha());
+        Long userId = repository.findIdByEmailAndSenha(credenciais.getEmail(), credenciais.getSenha());
         
         if (userId == null) {
             throw new NoSuchElementException("Usuário não encontrado com as credenciais fornecidas.");
