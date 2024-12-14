@@ -63,6 +63,7 @@ public class UsuarioService {
 //         return null;
 //    }
 
+    //método para aparecer id do usuário quando ele logar
     @Transactional
     public UsuarioId getIdByCredenciais(Credenciais credenciais) {
         Long userId = repository.findIdByEmailAndSenha(credenciais.getEmail(), credenciais.getSenha());
@@ -71,5 +72,17 @@ public class UsuarioService {
             throw new NoSuchElementException("Usuário não encontrado com as credenciais fornecidas.");
         }
         return new UsuarioId(userId);
+    }
+
+    //método para editar email e senha
+    @Transactional
+    public Usuario atualizarEmailESenha(Long id, Credenciais credenciais) {
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário com ID " + id + " não encontrado"));
+
+        usuario.setEmail(credenciais.getEmail());
+        usuario.setSenha(credenciais.getSenha());
+
+        return repository.save(usuario);
     }
 }

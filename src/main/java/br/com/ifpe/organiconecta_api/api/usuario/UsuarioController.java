@@ -62,9 +62,18 @@ public class UsuarioController {
 //      return ResponseEntity.status(404).body("Usuário não encontrado");
 //    }
 
-@PostMapping("/login")
+    //pegar id do usuário quando ele loga
+    @PostMapping("/login")
     public ResponseEntity<UsuarioId> getIdByCredenciais(@RequestBody Credenciais credenciais) {
         UsuarioId usuarioId = usuarioService.getIdByCredenciais(credenciais);
         return ResponseEntity.ok(usuarioId);
+    }
+
+    //editar e-mail e senha
+    @PutMapping("/{id}/atualizarcredenciais")
+    public Usuario atualizarEmailESenha(
+            @PathVariable Long id,
+            @RequestBody @Valid Credenciais credenciais) {
+        return usuarioService.atualizarEmailESenha(id, credenciais);
     }
 }

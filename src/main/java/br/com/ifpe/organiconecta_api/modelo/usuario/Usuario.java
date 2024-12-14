@@ -28,7 +28,7 @@ public class Usuario extends EntidadeAuditavel  {
    @Column (nullable = false, unique = true)
    private String email;
 
-   @JsonIgnore
+   // @JsonIgnore
    @Column (nullable = false)
    private String senha;
    
