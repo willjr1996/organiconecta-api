@@ -30,7 +30,7 @@ public class UsuarioRequest {
     private String senha;
 
     @NotBlank(message = "Um contato telefônico é obrigatório.")
-    @Length(max = 11, message = "O campo telefone tem que ter no máximo {max} caracteres")
+    @Length(max = 15, message = "O campo telefone tem que ter no máximo {max} caracteres")
     private String telefone;
     
     @NotBlank(message = "O CPF é obrigatório.")
