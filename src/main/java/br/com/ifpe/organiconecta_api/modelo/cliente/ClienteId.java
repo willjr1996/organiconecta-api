@@ -1,4 +1,4 @@
-package br.com.ifpe.organiconecta_api.modelo.usuario;
+package br.com.ifpe.organiconecta_api.modelo.cliente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioId {
+public class ClienteId {
     private Long id;
 }
