@@ -1,7 +1,11 @@
 package br.com.ifpe.organiconecta_api.modelo.plano;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.hibernate.annotations.SQLRestriction;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,9 +30,10 @@ public class Plano extends EntidadeAuditavel {
     @Column (nullable = false)
    private String tipoPlano;
 
-   @Column (nullable = false)
-   private Integer planoPreco;
+   @Column(precision = 7, scale = 2)
+   private BigDecimal planoPreco;
    
+   @JsonFormat(pattern = "dd/MM/yyyy")
    @Column (nullable = false)
    private LocalDate validade;
    

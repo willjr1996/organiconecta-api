@@ -1,5 +1,4 @@
 package br.com.ifpe.organiconecta_api.api.endereco;
-import java.time.LocalDate;
 import br.com.ifpe.organiconecta_api.modelo.endereco.Endereco;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,19 +23,28 @@ public class EnderecoRequest {
     private String enderecoComplemento;
 
     @NotBlank(message = "O bairro é obrigatório.")
-    private String EnderecoBairro;
+    private String enderecoBairro;
     
     @NotBlank(message = "A cidade é obrigatório.")
     private String enderecoCidade;
     
     @NotBlank(message = "O estado é obrigatório.")
-    private LocalDate enderecoEstado;
+    private String enderecoEstado;
 
     @NotBlank(message = "O CEP é obrigatório.")
-    private LocalDate enderecoCep;
+    private String enderecoCep;
 
     public Endereco build() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'build'");
+
+        return Endereco.builder()
+                .enderecoRua(enderecoRua)
+                .enderecoNumero(enderecoNumero)
+                .enderecoComplemento(enderecoComplemento)
+                .enderecoBairro(enderecoBairro)
+                .enderecoCidade(enderecoCidade)
+                .enderecoEstado(enderecoEstado)
+                .enderecoCep(enderecoCep)
+                
+                .build();
     }
 }

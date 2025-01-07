@@ -31,13 +31,13 @@ public class Endereco extends EntidadeAuditavel{
    private String enderecoComplemento;
     
    @Column (nullable = false)
-   private String EnderecoBairro;
+   private String enderecoBairro;
    
    @Column (nullable = false)
    private String enderecoCidade;
 
    @Column (nullable = false)
-   private LocalDate enderecoEstado;
+   private String enderecoEstado;
 
    @Column (nullable = false)
    private String enderecoCep;

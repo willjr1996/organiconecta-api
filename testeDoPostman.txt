@@ -1,0 +1,31 @@
+ENDEREÇO
+
+{
+    "id": 1,
+    "enderecoRua": "Avenida do João",
+    "enderecoNumero": "21",
+    "enderecoComplemento": "",
+    "enderecoBairro": "Barro",
+    "enderecoCidade": "Recife",
+    "enderecoEstado": "PE",
+    "enderecoCep": "54528-355"
+}
+
+PRODUTO
+
+{
+    "produtoNome": "melancia",
+    "produtoDescricao": "",
+    "produtoPreco": "10",
+    "produtoImagem": "teste-teste",
+    "produtoCategoria": "Frutas"
+
+}
+
+LOJAS
+
+{
+    "nomeLoja": "Zé do melão",
+    "registroPropriedade": "LJDSADSD2025",
+    "certificacao": "PDF"
+}

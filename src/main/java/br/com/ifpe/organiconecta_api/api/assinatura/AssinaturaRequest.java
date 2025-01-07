@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,12 +19,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AssinaturaRequest {
     
-    @NotBlank(message = "A escolha da data inicial é obrigatória.")
+    @NotNull(message = "A escolha da data inicial é obrigatória.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataInicio;
     
      @Future(message = "A data final deve ser uma data futura.")
-     @NotBlank(message = "A escolha da data final é obrigatória.")
+     @NotNull(message = "A escolha da data final é obrigatória.")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataFinal;
 

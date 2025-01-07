@@ -24,7 +24,7 @@ import lombok.Setter;
 public class Produto extends EntidadeAuditavel {
     
    @Column (nullable = false, length = 100)
-   private String ProdutoNome;
+   private String produtoNome;
 
    @Column (nullable = false)
    private String produtoDescricao;
@@ -36,7 +36,7 @@ public class Produto extends EntidadeAuditavel {
    private String produtoImagem;
    
    @Column (nullable = false)
-   private String produtoCategoria;
+   private String produtoCategoria   ;
 
    
 }
