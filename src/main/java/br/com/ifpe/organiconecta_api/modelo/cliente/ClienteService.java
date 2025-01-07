@@ -1,5 +1,6 @@
 package br.com.ifpe.organiconecta_api.modelo.cliente;
 
+import java.util.ArrayList;
 import java.util.List;
 // import java.util.NoSuchElementException;
 
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Perfil;
 import br.com.ifpe.organiconecta_api.modelo.acesso.PerfilRepository;
 import br.com.ifpe.organiconecta_api.modelo.acesso.UsuarioService;
+import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
+import br.com.ifpe.organiconecta_api.modelo.pedido.PedidoRepository;
 
 @Service
 public class ClienteService {
@@ -21,7 +24,11 @@ public class ClienteService {
 
     @Autowired
     private PerfilRepository perfilUsuarioRepository;
+    
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
+ 
     @Transactional
     public Cliente save(Cliente cliente) {
 
@@ -103,4 +110,46 @@ public class ClienteService {
 
     //     return repository.save(cliente);
     // }
+
+
+    @Transactional
+    public Pedido adicionarPedidoCliente(Long clienteId, Pedido pedido) {
+
+       Cliente cliente = this.obterPorID(clienteId);
+      
+       //Primeiro salva o pedido:
+
+       pedido.setCliente(cliente);
+       pedido.setHabilitado(Boolean.TRUE);
+       pedidoRepository.save(pedido);
+      
+       //Depois acrescenta o pedido criado ao cliente e atualiza o cliente:
+
+       List<Pedido> listaPedidoCliente = cliente.getPedidos();
+      
+       if (listaPedidoCliente == null) {
+        listaPedidoCliente = new ArrayList<Pedido>();
+       }
+      
+       listaPedidoCliente.add(pedido);
+       cliente.setPedidos(listaPedidoCliente);
+       repository.save(cliente);
+      
+       return pedido;
+   }
+
+   @Transactional
+   public void removerPedidoCliente(Long idPedido) {
+
+       Pedido pedido = pedidoRepository.findById(idPedido).get();
+       pedido.setHabilitado(Boolean.FALSE);
+       pedidoRepository.save(pedido);
+
+       Cliente cliente = this.obterPorID(pedido.getCliente().getId());
+       cliente.getPedidos().remove(pedido);
+       repository.save(cliente);
+   }
+
+
+
 }

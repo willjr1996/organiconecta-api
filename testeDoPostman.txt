@@ -1,0 +1,19 @@
+CLIENTE
+
+{
+    "email": "jaidene@teste.com",
+    "password": "2407",
+    "nome": "Jaidene",
+    "senha": "2407",
+    "telefone": "81 981310102",
+    "cpf": "839.641.810-13",
+    "dataNascimento": "24/07/1992"
+}
+
+AUTH
+{
+    "username": "jade@teste.com",
+    "password": "2407"
+
+}
+
