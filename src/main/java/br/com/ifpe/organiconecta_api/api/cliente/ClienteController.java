@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.ifpe.organiconecta_api.api.pedido.PedidoRequest;
 // import br.com.ifpe.organiconecta_api.modelo.cliente.Credenciais;
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 // import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteId;
 import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteService;
+import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
 import jakarta.validation.Valid;
 
 @RestController
@@ -76,4 +79,25 @@ public class ClienteController {
     //         @RequestBody @Valid Credenciais credenciais) {
     //     return clienteService.atualizarEmailESenha(id, credenciais);
     // }
+
+
+    //Cadastrando o pedido do cliente
+    @PostMapping("/pedido/{clienteId}")
+    public ResponseEntity<Pedido> adicionarPedidoCliente(@PathVariable("clienteId") Long clienteId, @RequestBody @Valid PedidoRequest request) {
+
+       Pedido pedido = clienteService.adicionarPedidoCliente(clienteId, request.build());
+       return new ResponseEntity<Pedido>(pedido, HttpStatus.CREATED);
+   }
+
+
+   //Excluindo o pedido do cliente
+   @DeleteMapping("/pedido/{pedidoId}")
+   public ResponseEntity<Void> removerPedidoCliente(@PathVariable("pedidoId") Long pedidoId) {
+
+       clienteService.removerPedidoCliente(pedidoId);
+       return ResponseEntity.noContent().build();
+   }
+
+
+
 }
