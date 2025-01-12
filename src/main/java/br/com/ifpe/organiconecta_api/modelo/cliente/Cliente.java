@@ -10,12 +10,12 @@ import org.hibernate.annotations.SQLRestriction;
 // import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
+import br.com.ifpe.organiconecta_api.modelo.produtor.Produtor;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -35,6 +35,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente extends EntidadeAuditavel {
+
+   @OneToOne(mappedBy = "cliente")  
+    private Produtor produtor;
 
    @OneToOne
    @JoinColumn(nullable = false)
