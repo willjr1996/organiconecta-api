@@ -11,13 +11,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProdutorRequest {
+
+    private Long clienteId; 
+    private Long idLoja;   
+
     
-    private Long clienteId; // ID do cliente associado ao produtor
-
-    // Método que constrói um Produtor a partir do request
     public Produtor build() {
-        Produtor produtor = new Produtor();
 
-        return produtor;
+        return Produtor.builder()
+        
+        .build();
+        
     }
 }

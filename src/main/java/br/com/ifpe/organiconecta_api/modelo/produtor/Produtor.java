@@ -1,6 +1,7 @@
 package br.com.ifpe.organiconecta_api.modelo.produtor;
 
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
+import br.com.ifpe.organiconecta_api.modelo.lojas.Lojas;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLRestriction;
@@ -25,6 +26,9 @@ public class Produtor extends EntidadeAuditavel {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-
-
+    @OneToOne(mappedBy = "produtor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Lojas loja;
 }
+
+
+
