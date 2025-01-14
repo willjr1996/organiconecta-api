@@ -76,10 +76,14 @@ public class ProdutoService {
        (produtoNome != null && !"".equals(produtoNome)) &&
        (produtoCategoria != null)) {
            listaProdutos = repository.consultarPorProdutoNomeECategoria(produtoNome, produtoCategoria); 
-   }
+   } else if (
+    (produtoCodigo != null || "".equals(produtoCodigo)) &&
+    (produtoNome != null && !"".equals(produtoNome)) &&
+    (produtoCategoria != null)) {
+        listaProdutos = repository.consultarPorProdutoNomeECategoriaECodigo(produtoCodigo, produtoNome, produtoCategoria); 
+} 
 
    return listaProdutos;
 }
 
 }
-

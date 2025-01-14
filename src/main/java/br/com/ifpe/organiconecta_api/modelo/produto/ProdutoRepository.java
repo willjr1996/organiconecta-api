@@ -27,5 +27,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
    @Query(value = "SELECT p FROM Produto p WHERE p.produtoNome ilike %:produtoNome% AND p.produtoCategoria = :produtoCategoria")
    List<Produto> consultarPorProdutoNomeECategoria(String produtoNome, String produtoCategoria);
 
+   @Query(value = "SELECT p FROM Produto p WHERE  p.produtoCodigo = :produtoCodigo AND p.produtoNome ilike %:produtoNome% AND p.produtoCategoria  = :produtoCategoria")
+   List<Produto> consultarPorProdutoNomeECategoriaECodigo(String produtoCodigo, String produtoNome, String produtoCategoria);
+
   
 }
