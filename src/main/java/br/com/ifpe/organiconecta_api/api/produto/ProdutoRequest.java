@@ -4,8 +4,6 @@ import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
 
 import java.math.BigDecimal;
 
-import br.com.ifpe.organiconecta_api.modelo.pagamento.Pagamento;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -33,6 +31,9 @@ public class ProdutoRequest {
     @NotBlank(message = "A inclusão da categoria é obrigatória.")
     private String produtoCategoria;
 
+    @NotBlank(message = "A inclusão do código é obrigatória.")
+    private String produtoCodigo;
+
     public Produto build() {
 
         return Produto.builder()
@@ -41,6 +42,7 @@ public class ProdutoRequest {
                 .produtoPreco(produtoPreco)
                 .produtoImagem(produtoImagem)
                 .produtoCategoria(produtoCategoria)
+                .produtoCodigo(produtoCodigo)
                 .build();
     }
 }

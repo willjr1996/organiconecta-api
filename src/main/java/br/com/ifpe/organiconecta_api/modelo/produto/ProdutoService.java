@@ -41,6 +41,7 @@ public class ProdutoService {
         produto.setProdutoImagem(produtoAlterado.getProdutoImagem());
         produto.setProdutoImagem(produtoAlterado.getProdutoImagem());
         produto.setProdutoCategoria(produtoAlterado.getProdutoCategoria());
+        produto.setProdutoCodigo(produtoAlterado.getProdutoCodigo());
         repository.save(produto);
     }
 
@@ -51,4 +52,34 @@ public class ProdutoService {
         repository.save(produto);
 
    }
+
+   public List<Produto> filtrar(String produtoCodigo, String produtoNome, String produtoCategoria) {
+
+   List<Produto> listaProdutos = repository.findAll();
+
+   if ((produtoCodigo != null && !"".equals(produtoCodigo)) &&
+       (produtoNome == null || "".equals(produtoNome)) &&
+       (produtoCategoria == null)) {
+           listaProdutos = repository.findByProdutoCodigoContainingIgnoreCaseOrderByProdutoCodigoAsc(produtoCodigo);
+   } else if (
+       (produtoCodigo == null || "".equals(produtoCodigo)) &&
+       (produtoNome != null && !"".equals(produtoNome)) &&
+       (produtoCategoria == null)) {    
+           listaProdutos = repository.findByProdutoNomeContainingIgnoreCaseOrderByProdutoNomeAsc(produtoNome);
+   } else if (
+       (produtoCodigo == null || "".equals(produtoCodigo)) &&
+       (produtoNome == null || "".equals(produtoNome)) &&
+       (produtoCategoria != null)) {
+           listaProdutos = repository.findByProdutoCategoriaContainingIgnoreCaseOrderByProdutoCategoriaAsc(produtoCategoria); 
+   } else if (
+       (produtoCodigo == null || "".equals(produtoCodigo)) &&
+       (produtoNome != null && !"".equals(produtoNome)) &&
+       (produtoCategoria != null)) {
+           listaProdutos = repository.consultarPorProdutoNomeECategoria(produtoNome, produtoCategoria); 
+   }
+
+   return listaProdutos;
 }
+
+}
+

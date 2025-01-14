@@ -39,7 +39,7 @@ public class SecurityConfiguration {
             .csrf(c -> c.disable())
             .authorizeHttpRequests(authorize -> authorize
 
-                .requestMatchers(HttpMethod.POST, "/api/cliente/*").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
                 
                 //provisoriamente essas rotas estão liberadas sem token

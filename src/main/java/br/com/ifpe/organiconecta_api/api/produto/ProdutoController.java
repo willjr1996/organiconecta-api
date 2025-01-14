@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
@@ -53,4 +54,14 @@ public class ProdutoController {
        produtoService.delete(id);
        return ResponseEntity.ok().build();
    }
+
+   @PostMapping("/filtrar")
+   public List<Produto> filtrar(
+           @RequestParam(value = "produtoCodigo", required = false) String produtoCodigo,
+           @RequestParam(value = "produtoNome", required = false) String produtoNome,
+           @RequestParam(value = "produtoCategoria", required = false) String produtoCategoria) {
+
+       return produtoService.filtrar(produtoCodigo, produtoNome, produtoCategoria);
+   }
+
 }
