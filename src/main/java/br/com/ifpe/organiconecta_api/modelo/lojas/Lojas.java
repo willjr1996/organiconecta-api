@@ -2,7 +2,7 @@ package br.com.ifpe.organiconecta_api.modelo.lojas;
 
 import org.hibernate.annotations.SQLRestriction;
 
-import br.com.ifpe.organiconecta_api.modelo.produtor.Produtor;
+import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,7 +40,7 @@ public class Lojas extends EntidadeAuditavel {
 
    @OneToOne
    @JoinColumn(name = "produtor_id", nullable = false) 
-   private Produtor produtor;
+   private Cliente cliente;
    
   
 }

@@ -1,9 +1,10 @@
 package br.com.ifpe.organiconecta_api.modelo.lojas;
 
-import br.com.ifpe.organiconecta_api.modelo.produtor.Produtor;
-import br.com.ifpe.organiconecta_api.modelo.produtor.ProdutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
+import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteRepository;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
@@ -15,16 +16,15 @@ public class LojasService {
     private LojasRepository repository;
 
     @Autowired
-    private ProdutorRepository produtorRepository;
+    private ClienteRepository clienteRepository;
 
-    // Criar Loja com associação a um Produtor
     @Transactional
-    public Lojas save(Lojas loja, Long produtorId) {
+    public Lojas save(Lojas loja, Long clienteId) {
 
-        // Associa o produtor à loja
-        Produtor produtor = produtorRepository.findById(produtorId)
-                .orElseThrow(() -> new RuntimeException("Produtor não encontrado"));
-        loja.setProdutor(produtor);
+
+        Cliente cliente = clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new RuntimeException("cliente não encontrado"));
+        loja.setCliente(cliente);
 
         loja.setHabilitado(Boolean.TRUE);
         return repository.save(loja);
@@ -41,9 +41,9 @@ public class LojasService {
                 .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
     }
 
-    // Atualizar Loja e o Produtor associado
+    // Atualizar Loja e o cliente associado
     @Transactional
-    public void update(Long id, Lojas lojaAlterada, Long produtorId) {
+    public void update(Long id, Lojas lojaAlterada, Long clienteId) {
         Lojas lojaExistente = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
 
@@ -51,11 +51,11 @@ public class LojasService {
         lojaExistente.setRegistroPropriedade(lojaAlterada.getRegistroPropriedade());
         lojaExistente.setCertificacao(lojaAlterada.getCertificacao());
 
-        // Atualizar Produtor associado
-        if (produtorId != null) {
-            Produtor produtor = produtorRepository.findById(produtorId)
-                    .orElseThrow(() -> new RuntimeException("Produtor não encontrado"));
-            lojaExistente.setProdutor(produtor);
+        // Atualizar cliente associado
+        if (clienteId != null) {
+            Cliente cliente = clienteRepository.findById(clienteId)
+                    .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+            lojaExistente.setCliente(cliente);
         }
 
         repository.save(lojaExistente);

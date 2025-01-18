@@ -1,5 +1,6 @@
 package br.com.ifpe.organiconecta_api.modelo.acesso;
 
+
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeNegocio;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Table(name = "perfil")
 @SQLRestriction("habilitado = true")
@@ -20,16 +22,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Perfil extends EntidadeNegocio implements GrantedAuthority {
-  
+ 
    public static final String ROLE_CLIENTE = "CLIENTE";
+   public static final String ROLE_CLIENTE_PRODUTOR = "CLIENTE_PRODUTOR";
    public static final String ROLE_FUNCIONARIO_ADMIN = "ROLE_FUNCIONARIO_ADMIN"; // READ, DELETE, WRITE, UPDATE.
    public static final String ROLE_FUNCIONARIO_USER = "ROLE_FUNCIONARIO_USER"; // READ, WRITE, UPDATE.
-  
+ 
    private String nome;
-  
+ 
    @Override
    public String getAuthority() {
        return this.nome;
    }
-  
+ 
 }

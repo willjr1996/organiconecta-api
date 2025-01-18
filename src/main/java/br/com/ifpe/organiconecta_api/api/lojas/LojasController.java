@@ -12,20 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/lojas")
+@RequestMapping("/api/loja")
 @CrossOrigin
 public class LojasController {
 
     @Autowired
     private LojasService lojasService;
 
-    // Criar loja com associação ao produtor
     @PostMapping
     public ResponseEntity<Lojas> save(
             @RequestBody @Valid Lojas loja,
-            @RequestParam(required = true) Long produtorId) {
+            @RequestParam(required = true) Long clienteId) {
 
-        Lojas novaLoja = lojasService.save(loja, produtorId);
+        Lojas novaLoja = lojasService.save(loja, clienteId);
         return new ResponseEntity<>(novaLoja, HttpStatus.CREATED);
     }
 
@@ -42,14 +41,14 @@ public class LojasController {
         return ResponseEntity.ok(loja);
     }
 
-    // Atualizar loja com associação ao produtor
+    // Atualizar loja com associação ao cliente
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(
             @PathVariable("id") Long id,
             @RequestBody @Valid Lojas loja,
-            @RequestParam(required = false) Long produtorId) {
+            @RequestParam(required = false) Long clienteId) {
 
-        lojasService.update(id, loja, produtorId);
+        lojasService.update(id, loja, clienteId);
         return ResponseEntity.ok().build();
     }
 

@@ -1,16 +1,19 @@
 package br.com.ifpe.organiconecta_api.modelo.cliente;
 
+
 import java.time.LocalDate;
 import java.util.List;
 
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
 
 import org.hibernate.annotations.SQLRestriction;
 // import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
-import br.com.ifpe.organiconecta_api.modelo.produtor.Produtor;
+import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,6 +29,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
+
+
 @Entity
 @Table(name = "cliente")
 @SQLRestriction("habilitado = true")
@@ -36,40 +41,42 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Cliente extends EntidadeAuditavel {
 
-   @OneToOne(mappedBy = "cliente")  
-    private Produtor produtor;
 
-   @OneToOne
-   @JoinColumn(nullable = false)
-   private Usuario usuario;
+   @OneToOne(mappedBy = "cliente")
+    private TipoCliente tipoCliente;
 
-   @Column(nullable = false, length = 100)
-   private String nome;
 
    //Muitos endereços para um cliente
    @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
    @Fetch(FetchMode.SUBSELECT)
    private List<EnderecoCliente> enderecos;
 
-   // @Column (nullable = false, unique = true)
-   // private String email;
-
-   // @JsonIgnore
-   // @Column (nullable = false)
-   // private String senha;
 
    //Muitos pedidos para um cliente
    @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
    @Fetch(FetchMode.SUBSELECT)
    private List<Pedido> pedidos;
 
+
+   @OneToOne
+   @JoinColumn(nullable = false)
+   private Usuario usuario;
+
+
+   @Column(nullable = false, length = 100)
+   private String nome;
+
+
    @Column(nullable = false)
    private String telefone;
+
 
    @Column(unique = true, nullable = false)
    private String cpf;
 
+
    @Column(nullable = false)
    private LocalDate dataNascimento;
+
 
 }

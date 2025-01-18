@@ -1,8 +1,9 @@
 package br.com.ifpe.organiconecta_api.api.lojas;
 
 import org.hibernate.validator.constraints.Length;
+
+import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.modelo.lojas.Lojas;
-import br.com.ifpe.organiconecta_api.modelo.produtor.Produtor;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,15 +26,15 @@ public class LojasRequest {
     @NotBlank(message = "A certificação é obrigatória.")
     private String certificacao;
 
-    private Long produtorId; // ID do produtor associado à loja
+    private Long clienteId;
 
     // Método para construir uma instância de Lojas
-    public Lojas build(Produtor produtor) {
+    public Lojas build(Cliente cliente) {
         return Lojas.builder()
                 .nomeLoja(nomeLoja)
                 .registroPropriedade(registroPropriedade)
                 .certificacao(certificacao)
-                .produtor(produtor) // Associa o produtor
+                .cliente(cliente) 
                 .build();
     }
 }
