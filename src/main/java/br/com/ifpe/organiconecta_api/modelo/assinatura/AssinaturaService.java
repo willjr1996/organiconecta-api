@@ -15,6 +15,7 @@ public class AssinaturaService {
     public Assinatura save(Assinatura assinatura) {
 
         assinatura.setHabilitado(Boolean.TRUE);
+        assinatura.setStatus(Boolean.FALSE);
         return repository.save(assinatura);
 
     }
@@ -36,8 +37,10 @@ public class AssinaturaService {
 
         Assinatura assinatura = repository.findById(id).get();
         assinatura.setDataInicio(assinaturaAlterado.getDataInicio());
-        assinatura.setDataFinal(assinaturaAlterado.getDataFinal());
+        assinatura.setValidade(assinaturaAlterado.getValidade());
         assinatura.setStatus(assinaturaAlterado.getStatus());
+        assinatura.setTipoPlano(assinaturaAlterado.getTipoPlano());
+        assinatura.setPlanoPreco(assinaturaAlterado.getPlanoPreco());
 
         repository.save(assinatura);
     }
@@ -46,6 +49,7 @@ public class AssinaturaService {
     public void delete(Long id) {
         Assinatura assinatura = repository.findById(id).get();
         assinatura.setHabilitado(Boolean.FALSE);
+        assinatura.setStatus(Boolean.FALSE);
         repository.save(assinatura);
 
     }
