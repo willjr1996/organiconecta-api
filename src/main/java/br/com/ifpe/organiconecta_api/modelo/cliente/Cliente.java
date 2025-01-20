@@ -47,11 +47,11 @@ import lombok.Setter;
 public class Cliente extends EntidadeAuditavel {
 
 
-   @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+   @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
    @JsonManagedReference
    private TipoCliente tipoCliente;
 
-   @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true) 
+   @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER) 
    @JsonManagedReference
    private Assinatura assinatura;
 

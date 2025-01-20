@@ -70,19 +70,21 @@ public Cliente save(Cliente cliente) {
     assinatura.setStatus(false); 
     assinatura.setTipoPlano(Assinatura.TipoPlanoEnum.GRATIS);
     assinatura.setPlanoPreco(BigDecimal.ZERO);
+    cliente.setAssinatura(assinatura);
+    assinaturaService.save(assinatura);
 
-    TipoCliente tipoCliente = new TipoCliente();
 
+    TipoCliente tipoCliente = new TipoCliente();    
     tipoCliente.setCliente(cliente);
     tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
     cliente.setTipoCliente(tipoCliente);
-    cliente.setAssinatura(assinatura);
-    assinaturaService.save(assinatura);
+    
+    
     tipoClienteService.save(tipoCliente);
-
     cliente.setHabilitado(Boolean.TRUE);
-    return cliente;
-}
+
+    return repository.save(cliente);
+}   
 
 
 
@@ -131,6 +133,13 @@ public Cliente save(Cliente cliente) {
     @Transactional
     public void delete(Long id) {
         Cliente cliente = repository.findById(id).get();
+
+        Assinatura assinatura = cliente.getAssinatura();
+        assinaturaService.delete(assinatura.getId()); 
+
+        TipoCliente tipoCliente = cliente.getTipoCliente();
+        tipoClienteService.delete(tipoCliente.getId()); 
+
         cliente.setHabilitado(Boolean.FALSE);
         repository.save(cliente);
 
