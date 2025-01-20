@@ -10,11 +10,16 @@ import org.hibernate.annotations.FetchMode;
 
 
 import org.hibernate.annotations.SQLRestriction;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 // import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
+import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura;
 import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -42,8 +47,13 @@ import lombok.Setter;
 public class Cliente extends EntidadeAuditavel {
 
 
-   @OneToOne(mappedBy = "cliente")
-    private TipoCliente tipoCliente;
+   @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+   @JsonManagedReference
+   private TipoCliente tipoCliente;
+
+   @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true) 
+   @JsonManagedReference
+   private Assinatura assinatura;
 
 
    //Muitos endereços para um cliente

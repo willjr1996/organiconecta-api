@@ -42,6 +42,7 @@ public class AssinaturaController {
         return assinaturaService.obterPorID(id);
     }
 
+    
     @PutMapping("/{id}")
         public ResponseEntity<Assinatura> update(@PathVariable("id") Long id, @RequestBody AssinaturaRequest request) {
         assinaturaService.update(id, request.build());
@@ -52,5 +53,12 @@ public class AssinaturaController {
        public ResponseEntity<Void> delete(@PathVariable Long id) {
        assinaturaService.delete(id);
        return ResponseEntity.ok().build();
+       
    }
+
+   @PutMapping("/{id}/ativarplano")
+    public ResponseEntity<Void> ativarPlanoPago(@PathVariable("id") Long id) {
+    assinaturaService.atualizarPlanoParaPago(id);
+    return ResponseEntity.ok().build();
+}
 }

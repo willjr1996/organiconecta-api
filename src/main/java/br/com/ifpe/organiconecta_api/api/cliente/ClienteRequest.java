@@ -27,13 +27,6 @@ public class ClienteRequest {
     @Length(max = 100, message = "O nome deve ter no máximo 100 caracteres.")
     private String nome;
 
-    // @NotBlank(message = "O email é obrigatório.")
-    // @Email(message = "O email deve ser válido.")
-    // private String email;
-
-    // @NotBlank(message = "A senha é obrigatória.")
-    // private String senha;
-
     @NotBlank(message = "Um contato telefônico é obrigatório.")
     @Length(max = 15, message = "O campo telefone tem que ter no máximo {max} caracteres")
     private String telefone;

@@ -26,17 +26,12 @@ public class TipoClienteService {
     @Transactional
     public TipoCliente save(TipoCliente tipoCliente) {
 
-
-        if (tipoCliente.getCliente() != null) {
-            tipoCliente.setCliente(clienteRepository.findById(tipoCliente.getCliente().getId())
-                    .orElseThrow(() -> new RuntimeException("Cliente não identificado")));
-
-
-                     // Sincroniza a relação bidirecional
-            tipoCliente.getCliente().setTipoCliente(tipoCliente);
+        if (tipoCliente.getCliente() == null) {
+            throw new RuntimeException("O TipoCliente deve ter um Cliente associado.");
         }
-
-
+    
+        Cliente cliente = tipoCliente.getCliente();
+        cliente.setTipoCliente(tipoCliente); // Configura o relacionamento bidirecional
         tipoCliente.setHabilitado(Boolean.TRUE);
         return tipoClienteRepository.save(tipoCliente);
     }

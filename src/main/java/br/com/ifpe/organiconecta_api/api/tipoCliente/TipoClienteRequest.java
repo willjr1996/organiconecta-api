@@ -17,9 +17,8 @@ public class TipoClienteRequest {
 
 
     private Long clienteId;
+    
     private TipoClienteEnum tipoUsuario;  
-
-
    
     public TipoCliente build() {
 

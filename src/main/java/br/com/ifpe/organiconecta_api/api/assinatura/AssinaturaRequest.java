@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura;
+import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura.TipoPlanoEnum;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AssinaturaRequest {
+
+    private Long clienteId;
     
     @NotNull(message = "A escolha da data inicial é obrigatória.")
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -29,11 +32,11 @@ public class AssinaturaRequest {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate validade;
 
-    @NotBlank(message = "A escolha do status da assinatura é obrigatória.")
+    @NotNull(message = "A escolha do status da assinatura é obrigatória.")
     private Boolean status;
 
-    @NotBlank(message = "A escolha do tipo do plano é obrigatória.")
-    private String tipoPlano;
+    @NotNull(message = "A escolha do tipo do plano é obrigatória.")
+    private TipoPlanoEnum tipoPlano;
 
     @NotBlank(message = "A escolha do preço do plano é obrigatória.")
     private BigDecimal planoPreco;

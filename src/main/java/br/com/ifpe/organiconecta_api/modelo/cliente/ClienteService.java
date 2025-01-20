@@ -1,6 +1,8 @@
 package br.com.ifpe.organiconecta_api.modelo.cliente;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 // import java.util.NoSuchElementException;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Perfil;
 import br.com.ifpe.organiconecta_api.modelo.acesso.PerfilRepository;
 import br.com.ifpe.organiconecta_api.modelo.acesso.UsuarioService;
+import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura;
+import br.com.ifpe.organiconecta_api.modelo.assinatura.AssinaturaService;
 import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
 import br.com.ifpe.organiconecta_api.modelo.pedido.PedidoRepository;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
@@ -25,58 +29,61 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-
     @Autowired
     private UsuarioService usuarioService;
-
 
     @Autowired
     private TipoClienteService tipoClienteService;
 
-
     @Autowired
     private PerfilRepository perfilUsuarioRepository;
-
 
     @Autowired
     private PedidoRepository pedidoRepository;
 
-
     @Autowired
     private EnderecoClienteRepository enderecoClienteRepository;
 
+    @Autowired
+    private AssinaturaService assinaturaService;
+
 
     @Transactional
-    public Cliente save(Cliente cliente) {
+public Cliente save(Cliente cliente) {
+    // Salva o usuário associado ao cliente
+    usuarioService.save(cliente.getUsuario());
 
-
-        usuarioService.save(cliente.getUsuario());
-
-
-        for (Perfil perfil : cliente.getUsuario().getRoles()) {
-            perfil.setHabilitado(Boolean.TRUE);
-            perfilUsuarioRepository.save(perfil);
-        }
-
-
-         if (cliente.getTipoCliente() == null) {
-            TipoCliente tipoCliente = new TipoCliente();
-            tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);  // Define o tipo como CLIENTE
-            tipoCliente.setCliente(cliente);  // Relaciona o TipoCliente com o Cliente
-
-
-            tipoClienteService.save(tipoCliente);
-
-
-            cliente.setTipoCliente(tipoCliente);
-        }
-
-
-        cliente.setHabilitado(Boolean.TRUE);
-        return repository.save(cliente);
-
-
+    // Salva os perfis associados ao usuário
+    for (Perfil perfil : cliente.getUsuario().getRoles()) {
+        perfil.setHabilitado(Boolean.TRUE);
+        perfilUsuarioRepository.save(perfil);
     }
+
+    // Salva o cliente no banco para gerar o ID
+    cliente = repository.save(cliente);
+
+    // Cria e associa uma assinatura ao cliente
+    Assinatura assinatura = new Assinatura();
+    assinatura.setCliente(cliente);
+    assinatura.setDataInicio(LocalDate.now());
+    assinatura.setValidade(LocalDate.now().plusMonths(1));
+    assinatura.setStatus(false); 
+    assinatura.setTipoPlano(Assinatura.TipoPlanoEnum.GRATIS);
+    assinatura.setPlanoPreco(BigDecimal.ZERO);
+
+    TipoCliente tipoCliente = new TipoCliente();
+
+    tipoCliente.setCliente(cliente);
+    tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
+    cliente.setTipoCliente(tipoCliente);
+    cliente.setAssinatura(assinatura);
+    assinaturaService.save(assinatura);
+    tipoClienteService.save(tipoCliente);
+
+    cliente.setHabilitado(Boolean.TRUE);
+    return cliente;
+}
+
 
 
     public List<Cliente> listarTodos() {
@@ -103,14 +110,21 @@ public class ClienteService {
 
         Cliente cliente = repository.findById(id).get();
         cliente.setNome(clienteAlterado.getNome());
-        // cliente.setEmail(clienteAlterado.getEmail());
         cliente.setTelefone(clienteAlterado.getTelefone());
         cliente.setCpf(clienteAlterado.getCpf());
         cliente.setDataNascimento(clienteAlterado.getDataNascimento());
-        // cliente.setSenha(clienteAlterado.getSenha());
 
-
-        repository.save(cliente);
+        if (cliente.getAssinatura() != null && cliente.getAssinatura().getTipoPlano() != null) {
+            TipoCliente tipoCliente = cliente.getTipoCliente();
+            if (cliente.getAssinatura().getTipoPlano() == Assinatura.TipoPlanoEnum.PAGO) {
+                tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTEPRODUTOR);
+            } else {
+                tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
+            }
+            tipoClienteService.save(tipoCliente);  // Atualizar o tipo de cliente
+        }
+    
+        repository.save(cliente);  // Salvar as alterações no cliente
     }
 
 

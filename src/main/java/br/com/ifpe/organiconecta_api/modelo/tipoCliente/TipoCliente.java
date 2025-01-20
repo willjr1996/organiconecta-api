@@ -6,6 +6,8 @@ import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLRestriction;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +29,8 @@ public class TipoCliente extends EntidadeAuditavel {
 
     @OneToOne
     @JoinColumn(name = "cliente_id", nullable = false)
+    @JsonBackReference
+    @JsonIgnore
     private Cliente cliente;
 
 

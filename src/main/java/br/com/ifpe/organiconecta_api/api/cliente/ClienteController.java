@@ -57,29 +57,6 @@ public class ClienteController {
        return ResponseEntity.ok().build();
    }
 
-//    @PostMapping("/login")
-//    public ResponseEntity <String> login (@RequestBody @Valid LoginRequest loginRequest){
-//      String nome = clienteService.Login(loginRequest.getEmail(), loginRequest.getSenha());
-//      if(nome != null){
-//         return ResponseEntity.ok("Bem Vindo " + nome + "!");
-//      }
-//      return ResponseEntity.status(404).body("Usuário não encontrado");
-//    }
-
-    //pegar id do usuário quando ele loga
-    // @PostMapping("/login")
-    // public ResponseEntity<ClienteId> getIdByCredenciais(@RequestBody Credenciais credenciais) {
-    //     ClienteId clienteId = clienteService.getIdByCredenciais(credenciais);
-    //     return ResponseEntity.ok(clienteId);
-    // }
-
-    // //editar e-mail e senha
-    // @PutMapping("/{id}/atualizarcredenciais")
-    // public Cliente atualizarEmailESenha(
-    //         @PathVariable Long id,
-    //         @RequestBody @Valid Credenciais credenciais) {
-    //     return clienteService.atualizarEmailESenha(id, credenciais);
-    // }
 
     //Cadastrando o pedido do cliente
     @PostMapping("/pedido/{clienteId}")
