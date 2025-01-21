@@ -49,6 +49,8 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST, "/api/tipocliente/inicializar").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/tipocliente").permitAll()
 
+                .requestMatchers(HttpMethod.POST, "/api/redefinir/*").permitAll()
+
                 .requestMatchers(HttpMethod.GET, "/api-docs/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
 

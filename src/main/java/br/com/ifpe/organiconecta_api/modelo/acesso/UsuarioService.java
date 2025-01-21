@@ -57,4 +57,3 @@ public class UsuarioService implements UserDetailsService {
         return repository.save(user);
     }
 }
-

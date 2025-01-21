@@ -1,28 +1,20 @@
 package br.com.ifpe.organiconecta_api.api.tipoCliente;
 
-
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteService;
 import jakarta.validation.Valid;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/tipocliente")
 public class TipoClienteController {
 
-
     @Autowired
     private TipoClienteService tipoClienteService;
-
 
     // Criar produtor com associação à loja
     @PostMapping
@@ -37,21 +29,17 @@ public class TipoClienteController {
         return new ResponseEntity<>(tipoCliente, HttpStatus.CREATED);
     }
 
-
     // Listar todos os produtores
     @GetMapping
     public List<TipoCliente> listarTodos() {
         return tipoClienteService.listarTodos();
     }
-
-
     // Obter produtor por ID
     @GetMapping("/{id}")
     public ResponseEntity<TipoCliente> obterPorID(@PathVariable Long id) {
         TipoCliente tipoCliente = tipoClienteService.obterPorID(id);
         return ResponseEntity.ok(tipoCliente);
     }
-
 
     // Atualizar tipoCliente com associação à loja
     // @PutMapping("/{id}")
@@ -66,10 +54,6 @@ public class TipoClienteController {
          
     //     return ResponseEntity.ok().build();
     // }
-
-
-   
-
 
     // Deletar tipoCliente
     @DeleteMapping("/{id}")

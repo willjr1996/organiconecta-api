@@ -1,25 +1,11 @@
 package br.com.ifpe.organiconecta_api.modelo.cliente;
 
-
-
-
 import java.time.LocalDate;
 import java.util.List;
-
-
-
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-
-
-
 import org.hibernate.annotations.SQLRestriction;
-
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 // import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
@@ -39,13 +25,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
-
-
-
-
-
 @Entity
 @Table(name = "cliente")
 @SQLRestriction("habilitado = true")
@@ -57,46 +36,27 @@ import lombok.Setter;
 public class Cliente extends EntidadeAuditavel {
 
    @ManyToOne
-    private TipoCliente tipoCliente;
-
+   private TipoCliente tipoCliente;
 
    //Muitos endereços para um cliente
    @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
    @Fetch(FetchMode.SUBSELECT)
    private List<EnderecoCliente> enderecos;
 
-
-
-
    @OneToOne
    @JoinColumn(nullable = false)
    private Usuario usuario;
 
-
-
-
    @Column(nullable = false, length = 100)
    private String nome;
-
-
-
 
    @Column(nullable = false)
    private String telefone;
 
-
-
-
    @Column(unique = true, nullable = false)
    private String cpf;
 
-
-
-
    @Column(nullable = false)
    private LocalDate dataNascimento;
-
-
-
 
 }

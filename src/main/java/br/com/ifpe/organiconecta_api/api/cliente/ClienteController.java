@@ -57,7 +57,6 @@ public class ClienteController {
        return ResponseEntity.ok().build();
    }
 
-
     //Cadastrando o pedido do cliente
 //     @PostMapping("/pedido/{clienteId}")
 //     public ResponseEntity<Pedido> adicionarPedidoCliente(@PathVariable("clienteId") Long clienteId, @RequestBody @Valid PedidoRequest request) {
