@@ -27,19 +27,13 @@ import lombok.Setter;
 public class TipoCliente extends EntidadeAuditavel {
 
 
-    @OneToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    @JsonBackReference
-    @JsonIgnore
-    private Cliente cliente;
+    
 
-
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoClienteEnum tipoUsuario;
+    private String tipo;
+
+    public static final String TIPO_CLIENTE = "Cliente";
+    public static final String TIPO_CLIENTE_PRODUTOR = "Produtor";
    
-    public enum TipoClienteEnum {
-        CLIENTE,
-        CLIENTEPRODUTOR
-    }
+
 }

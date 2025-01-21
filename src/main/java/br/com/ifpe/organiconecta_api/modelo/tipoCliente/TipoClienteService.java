@@ -19,19 +19,28 @@ public class TipoClienteService {
     private TipoClienteRepository tipoClienteRepository;
 
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    @Transactional
+public void inicializarTipos() {
+    // Verifica e cria o TipoCliente padrão
+    if (tipoClienteRepository.findByTipo(TipoCliente.TIPO_CLIENTE) == null) {
+        TipoCliente tipoCliente = new TipoCliente();
+        tipoCliente.setTipo(TipoCliente.TIPO_CLIENTE);
+        tipoCliente.setHabilitado(true); // Define habilitado como true
+        tipoClienteRepository.save(tipoCliente);
+    }
 
+    // Verifica e cria o TipoCliente produtor
+    if (tipoClienteRepository.findByTipo(TipoCliente.TIPO_CLIENTE_PRODUTOR) == null) {
+        TipoCliente tipoClienteProdutor = new TipoCliente();
+        tipoClienteProdutor.setTipo(TipoCliente.TIPO_CLIENTE_PRODUTOR);
+        tipoClienteProdutor.setHabilitado(true); // Define habilitado como true
+        tipoClienteRepository.save(tipoClienteProdutor);
+    }
+}
 
     @Transactional
     public TipoCliente save(TipoCliente tipoCliente) {
-
-        if (tipoCliente.getCliente() == null) {
-            throw new RuntimeException("O TipoCliente deve ter um Cliente associado.");
-        }
-    
-        Cliente cliente = tipoCliente.getCliente();
-        cliente.setTipoCliente(tipoCliente); // Configura o relacionamento bidirecional
+        
         tipoCliente.setHabilitado(Boolean.TRUE);
         return tipoClienteRepository.save(tipoCliente);
     }
@@ -48,29 +57,15 @@ public class TipoClienteService {
     }
 
 
-    @Transactional
-public void update(Long id, TipoCliente tipoClienteAlterado) {
-    // Encontrar o tipoCliente existente no banco de dados
-    TipoCliente tipoClienteExistente = tipoClienteRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Tipo do Cliente não identificado"));
+//     @Transactional
+// public void update(Long id, TipoCliente tipoClienteAlterado) {
+//     // Encontrar o tipoCliente existente no banco de dados
+//     TipoCliente tipoClienteExistente = tipoClienteRepository.findById(id)
+//             .orElseThrow(() -> new RuntimeException("Tipo do Cliente não identificado"));
 
 
-    // Atualizar Cliente associado
-    Cliente clienteExistente = tipoClienteExistente.getCliente();
-    if (clienteExistente == null) {
-        throw new RuntimeException("Cliente associado ao tipoCliente não identificado");
-    }
-
-
-    clienteExistente.setNome(tipoClienteAlterado.getCliente().getNome());
-    clienteExistente.setTelefone(tipoClienteAlterado.getCliente().getTelefone());
-    clienteExistente.setCpf(tipoClienteAlterado.getCliente().getCpf());
-    clienteExistente.setDataNascimento(tipoClienteAlterado.getCliente().getDataNascimento());
-    clienteRepository.save(clienteExistente);
-
-
-    tipoClienteRepository.save(tipoClienteExistente);
-}
+//     tipoClienteRepository.save(tipoClienteExistente);
+// }
 
 
 

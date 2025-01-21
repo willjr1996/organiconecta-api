@@ -1,7 +1,6 @@
 package br.com.ifpe.organiconecta_api.api.tipoCliente;
 
 
-import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteService;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteService;
 import jakarta.validation.Valid;
@@ -25,12 +24,6 @@ public class TipoClienteController {
     private TipoClienteService tipoClienteService;
 
 
-   @Autowired
-   private ClienteService clienteService;
-
-
-
-
     // Criar produtor com associação à loja
     @PostMapping
     public ResponseEntity<TipoCliente> save(
@@ -38,7 +31,6 @@ public class TipoClienteController {
 
 
         TipoCliente novoTipoCliente = request.build();
-        novoTipoCliente.setCliente(clienteService.obterPorID(request.getClienteId()));
         TipoCliente tipoCliente = tipoClienteService.save(novoTipoCliente);
 
 
@@ -62,18 +54,18 @@ public class TipoClienteController {
 
 
     // Atualizar tipoCliente com associação à loja
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> update(
-            @PathVariable Long id,
-            @RequestBody @Valid TipoClienteRequest request) {
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Void> update(
+    //         @PathVariable Long id,
+    //         @RequestBody @Valid TipoClienteRequest request) {
 
 
-                TipoCliente tipoCliente = request.build();
-                tipoCliente.setCliente (clienteService.obterPorID(request.getClienteId()));
-                tipoClienteService.update(id, tipoCliente);
+    //             TipoCliente tipoCliente = request.build();
+    //             tipoCliente.setCliente (clienteService.obterPorID(request.getClienteId()));
+    //             tipoClienteService.update(id, tipoCliente);
          
-        return ResponseEntity.ok().build();
-    }
+    //     return ResponseEntity.ok().build();
+    // }
 
 
    
@@ -83,6 +75,12 @@ public class TipoClienteController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         tipoClienteService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/inicializar")
+    public ResponseEntity<Void> inicializarTipos() {
+        tipoClienteService.inicializarTipos();
         return ResponseEntity.ok().build();
     }
 }

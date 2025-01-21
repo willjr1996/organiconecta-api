@@ -2,7 +2,6 @@ package br.com.ifpe.organiconecta_api.api.tipoCliente;
 
 
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
-import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente.TipoClienteEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,15 +15,15 @@ import lombok.NoArgsConstructor;
 public class TipoClienteRequest {
 
 
-    private Long clienteId;
+    //private Long clienteId;
     
-    private TipoClienteEnum tipoUsuario;  
+    private String tipo;  
    
     public TipoCliente build() {
 
 
         return TipoCliente.builder()
-        .tipoUsuario(tipoUsuario)
+        .tipo(tipo)
         .build();
        
     }

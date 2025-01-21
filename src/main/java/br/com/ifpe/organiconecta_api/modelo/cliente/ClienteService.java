@@ -1,7 +1,6 @@
 package br.com.ifpe.organiconecta_api.modelo.cliente;
 
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,7 @@ import br.com.ifpe.organiconecta_api.modelo.assinatura.AssinaturaService;
 import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
 import br.com.ifpe.organiconecta_api.modelo.pedido.PedidoRepository;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
+import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteRepository;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteService;
 
 
@@ -33,13 +33,13 @@ public class ClienteService {
     private UsuarioService usuarioService;
 
     @Autowired
-    private TipoClienteService tipoClienteService;
+    private TipoClienteRepository tipoClienteRepository;
 
     @Autowired
     private PerfilRepository perfilUsuarioRepository;
 
-    @Autowired
-    private PedidoRepository pedidoRepository;
+    //@Autowired
+    //private PedidoRepository pedidoRepository;
 
     @Autowired
     private EnderecoClienteRepository enderecoClienteRepository;
@@ -47,11 +47,16 @@ public class ClienteService {
     @Autowired
     private AssinaturaService assinaturaService;
 
+    
+
 
     @Transactional
 public Cliente save(Cliente cliente) {
+
+
     // Salva o usuário associado ao cliente
     usuarioService.save(cliente.getUsuario());
+
 
     // Salva os perfis associados ao usuário
     for (Perfil perfil : cliente.getUsuario().getRoles()) {
@@ -59,32 +64,33 @@ public Cliente save(Cliente cliente) {
         perfilUsuarioRepository.save(perfil);
     }
 
+
+    TipoCliente tipoCliente = tipoClienteRepository.findByTipo(TipoCliente.TIPO_CLIENTE);
+    if (tipoCliente == null) {
+        throw new RuntimeException("TipoCliente padrão não encontrado no banco de dados.");
+    }
+    cliente.setTipoCliente(tipoCliente);
+
+    cliente.setHabilitado(Boolean.TRUE);
+
     // Salva o cliente no banco para gerar o ID
     cliente = repository.save(cliente);
+
 
     // Cria e associa uma assinatura ao cliente
     Assinatura assinatura = new Assinatura();
     assinatura.setCliente(cliente);
     assinatura.setDataInicio(LocalDate.now());
-    assinatura.setValidade(LocalDate.now().plusMonths(1));
-    assinatura.setStatus(false); 
-    assinatura.setTipoPlano(Assinatura.TipoPlanoEnum.GRATIS);
-    assinatura.setPlanoPreco(BigDecimal.ZERO);
-    cliente.setAssinatura(assinatura);
+    assinatura.setValidade(LocalDate.now().plusMonths(999));
+    assinatura.setStatusAssinatura(false);
+    //assinatura.setPlanoPreco(BigDecimal.ZERO);
+    assinatura.setHabilitado(Boolean.TRUE);
     assinaturaService.save(assinatura);
 
 
-    TipoCliente tipoCliente = new TipoCliente();    
-    tipoCliente.setCliente(cliente);
-    tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
-    cliente.setTipoCliente(tipoCliente);
-    
-    
-    tipoClienteService.save(tipoCliente);
-    cliente.setHabilitado(Boolean.TRUE);
+    return cliente;
+}
 
-    return repository.save(cliente);
-}   
 
 
 
@@ -116,15 +122,15 @@ public Cliente save(Cliente cliente) {
         cliente.setCpf(clienteAlterado.getCpf());
         cliente.setDataNascimento(clienteAlterado.getDataNascimento());
 
-        if (cliente.getAssinatura() != null && cliente.getAssinatura().getTipoPlano() != null) {
-            TipoCliente tipoCliente = cliente.getTipoCliente();
-            if (cliente.getAssinatura().getTipoPlano() == Assinatura.TipoPlanoEnum.PAGO) {
-                tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTEPRODUTOR);
-            } else {
-                tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
-            }
-            tipoClienteService.save(tipoCliente);  // Atualizar o tipo de cliente
-        }
+        // if (cliente.getAssinatura() != null && cliente.getAssinatura().getTipoPlano() != null) {
+        //     TipoCliente tipoCliente = cliente.getTipoCliente();
+        //     if (cliente.getAssinatura().getTipoPlano() == Assinatura.TipoPlanoEnum.PAGO) {
+        //         tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTEPRODUTOR);
+        //     } else {
+        //         tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
+        //     }
+        //     tipoClienteService.save(tipoCliente);  // Atualizar o tipo de cliente
+        // }
     
         repository.save(cliente);  // Salvar as alterações no cliente
     }
@@ -134,69 +140,62 @@ public Cliente save(Cliente cliente) {
     public void delete(Long id) {
         Cliente cliente = repository.findById(id).get();
 
-        Assinatura assinatura = cliente.getAssinatura();
-        assinaturaService.delete(assinatura.getId()); 
-
-        TipoCliente tipoCliente = cliente.getTipoCliente();
-        tipoClienteService.delete(tipoCliente.getId()); 
-
         cliente.setHabilitado(Boolean.FALSE);
         repository.save(cliente);
-
 
     }
 
 
 
 
-    @Transactional
-    public Pedido adicionarPedidoCliente(Long clienteId, Pedido pedido) {
+    // @Transactional
+    // public Pedido adicionarPedidoCliente(Long clienteId, Pedido pedido) {
 
 
-        Cliente cliente = this.obterPorID(clienteId);
+    //     Cliente cliente = this.obterPorID(clienteId);
 
 
-        // Primeiro salva o pedido:
+    //     // Primeiro salva o pedido:
 
 
-        pedido.setCliente(cliente);
-        pedido.setHabilitado(Boolean.TRUE);
-        pedidoRepository.save(pedido);
+    //     pedido.setCliente(cliente);
+    //     pedido.setHabilitado(Boolean.TRUE);
+    //     pedidoRepository.save(pedido);
 
 
         // Depois acrescenta o pedido criado ao cliente e atualiza o cliente:
 
 
-        List<Pedido> listaPedidoCliente = cliente.getPedidos();
+    //     List<Pedido> listaPedidoCliente = cliente.getPedidos();
 
 
-        if (listaPedidoCliente == null) {
-            listaPedidoCliente = new ArrayList<Pedido>();
-        }
+    //     if (listaPedidoCliente == null) {
+    //         listaPedidoCliente = new ArrayList<Pedido>();
+    //     }
 
 
-        listaPedidoCliente.add(pedido);
-        cliente.setPedidos(listaPedidoCliente);
-        repository.save(cliente);
+    //     listaPedidoCliente.add(pedido);
+    //     cliente.setPedidos(listaPedidoCliente);
+    //     repository.save(cliente);
 
 
-        return pedido;
-    }
+    //     return pedido;
+    // }
 
 
-    @Transactional
-    public void removerPedidoCliente(Long idPedido) {
+    // @Transactional
+    // public void removerPedidoCliente(Long idPedido) {
 
 
-        Pedido pedido = pedidoRepository.findById(idPedido).get();
-        pedido.setHabilitado(Boolean.FALSE);
-        pedidoRepository.save(pedido);
+    //     Pedido pedido = pedidoRepository.findById(idPedido).get();
+    //     pedido.setHabilitado(Boolean.FALSE);
+    //     pedidoRepository.save(pedido);
 
 
-        Cliente cliente = this.obterPorID(pedido.getCliente().getId());
-        cliente.getPedidos().remove(pedido);
-        repository.save(cliente);
-    }
+    //     Cliente cliente = this.obterPorID(pedido.getCliente().getId());
+    //     cliente.getPedidos().remove(pedido);
+    //     repository.save(cliente);
+    // }
 
 
     // Endereço

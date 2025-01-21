@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
-import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteService;
+import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteRepository;
+import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteRepository;
 
 @Service
 public class AssinaturaService {
@@ -16,7 +17,11 @@ public class AssinaturaService {
     private AssinaturaRepository repository;
 
     @Autowired
-    private TipoClienteService tipoClienteService;
+    private ClienteRepository clienteRepository;
+
+    @Autowired
+    private TipoClienteRepository tipoClienteRepository;
+
 
     @Transactional
 public Assinatura save(Assinatura assinatura) {
@@ -42,9 +47,9 @@ public Assinatura save(Assinatura assinatura) {
         Assinatura assinatura = repository.findById(id).get();
         assinatura.setDataInicio(assinaturaAlterado.getDataInicio());
         assinatura.setValidade(assinaturaAlterado.getValidade());
-        assinatura.setStatus(assinaturaAlterado.getStatus());
-        assinatura.setTipoPlano(assinaturaAlterado.getTipoPlano());
-        assinatura.setPlanoPreco(assinaturaAlterado.getPlanoPreco());
+        assinatura.setStatusAssinatura(assinaturaAlterado.getStatusAssinatura());
+        // assinatura.setTipoPlano(assinaturaAlterado.getTipoPlano());
+        // assinatura.setPlanoPreco(assinaturaAlterado.getPlanoPreco());
 
         repository.save(assinatura);
     }
@@ -54,15 +59,15 @@ public Assinatura save(Assinatura assinatura) {
     Assinatura assinatura = repository.findById(assinaturaId)
             .orElseThrow(() -> new RuntimeException("Assinatura não encontrada"));
 
-    // Reverter alterações no tipo do cliente
-    Cliente cliente = assinatura.getCliente();
-    TipoCliente tipoCliente = cliente.getTipoCliente();
-    tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
-    tipoClienteService.save(tipoCliente);
+    // // Reverter alterações no tipo do cliente
+    // Cliente cliente = assinatura.getCliente();
+    // TipoCliente tipoCliente = cliente.getTipoCliente();
+    // tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
+    // tipoClienteService.save(tipoCliente);
 
-    // Reverter alterações na assinatura
-    assinatura.setTipoPlano(Assinatura.TipoPlanoEnum.GRATIS);
-    assinatura.setStatus(false);
+    // // Reverter alterações na assinatura
+    // assinatura.setTipoPlano(Assinatura.TipoPlanoEnum.GRATIS);
+    // assinatura.setStatus(false);
     repository.save(assinatura);
 
     repository.deleteById(assinaturaId);
@@ -74,15 +79,17 @@ public Assinatura save(Assinatura assinatura) {
                 .orElseThrow(() -> new RuntimeException("Assinatura não encontrada"));
 
         // Atualizar tipo de plano
-        assinatura.setTipoPlano(Assinatura.TipoPlanoEnum.PAGO);
-        assinatura.setStatus(true); 
+        assinatura.setStatusAssinatura(true); 
         repository.save(assinatura);
 
-        // Atualizar tipo de cliente para ClienteProdutor
         Cliente cliente = assinatura.getCliente();
-        TipoCliente tipoCliente = cliente.getTipoCliente();
-        tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTEPRODUTOR);
-        tipoClienteService.save(tipoCliente);
-    }
+
+        TipoCliente tipoClienteProdutor = tipoClienteRepository.findByTipo(TipoCliente.TIPO_CLIENTE_PRODUTOR);
+   
+        cliente.setTipoCliente(tipoClienteProdutor);
+
+    // Salva as alterações no cliente
+         clienteRepository.save(cliente);
+}
 
 }
