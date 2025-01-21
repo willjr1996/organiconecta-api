@@ -1,5 +1,6 @@
 package br.com.ifpe.organiconecta_api.modelo.assinatura;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,7 @@ public class AssinaturaService {
 
     @Transactional
 public Assinatura save(Assinatura assinatura) {
+    assinatura.setHabilitado(Boolean.TRUE);
     return repository.save(assinatura);
 }
 
@@ -59,15 +61,6 @@ public Assinatura save(Assinatura assinatura) {
     Assinatura assinatura = repository.findById(assinaturaId)
             .orElseThrow(() -> new RuntimeException("Assinatura não encontrada"));
 
-    // // Reverter alterações no tipo do cliente
-    // Cliente cliente = assinatura.getCliente();
-    // TipoCliente tipoCliente = cliente.getTipoCliente();
-    // tipoCliente.setTipoUsuario(TipoCliente.TipoClienteEnum.CLIENTE);
-    // tipoClienteService.save(tipoCliente);
-
-    // // Reverter alterações na assinatura
-    // assinatura.setTipoPlano(Assinatura.TipoPlanoEnum.GRATIS);
-    // assinatura.setStatus(false);
     repository.save(assinatura);
 
     repository.deleteById(assinaturaId);
@@ -78,7 +71,7 @@ public Assinatura save(Assinatura assinatura) {
         Assinatura assinatura = repository.findById(assinaturaId)
                 .orElseThrow(() -> new RuntimeException("Assinatura não encontrada"));
 
-        // Atualizar tipo de plano
+        assinatura.setValidade(LocalDate.now().plusMonths(12));
         assinatura.setStatusAssinatura(true); 
         repository.save(assinatura);
 
@@ -87,6 +80,26 @@ public Assinatura save(Assinatura assinatura) {
         TipoCliente tipoClienteProdutor = tipoClienteRepository.findByTipo(TipoCliente.TIPO_CLIENTE_PRODUTOR);
    
         cliente.setTipoCliente(tipoClienteProdutor);
+
+    // Salva as alterações no cliente
+         clienteRepository.save(cliente);
+}
+
+@Transactional
+    public void atualizarPlanoParaGratis(Long assinaturaId) {
+        Assinatura assinatura = repository.findById(assinaturaId)
+                .orElseThrow(() -> new RuntimeException("Assinatura não encontrada"));
+
+        // Atualizar tipo de plano
+        assinatura.setValidade(LocalDate.of(2099, 12, 31));
+        assinatura.setStatusAssinatura(false); 
+        repository.save(assinatura);
+
+        Cliente cliente = assinatura.getCliente();
+
+        TipoCliente tipoCliente = tipoClienteRepository.findByTipo(TipoCliente.TIPO_CLIENTE);
+   
+        cliente.setTipoCliente(tipoCliente);
 
     // Salva as alterações no cliente
          clienteRepository.save(cliente);

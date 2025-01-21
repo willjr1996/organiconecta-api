@@ -26,15 +26,15 @@ public class LojasRequest {
     @NotBlank(message = "A certificação é obrigatória.")
     private String certificacao;
 
-    private Long clienteId;
+    private Long idCliente;
 
     // Método para construir uma instância de Lojas
-    public Lojas build(Cliente cliente) {
+    public Lojas build() {
+
         return Lojas.builder()
                 .nomeLoja(nomeLoja)
                 .registroPropriedade(registroPropriedade)
                 .certificacao(certificacao)
-                .cliente(cliente) 
                 .build();
     }
 }

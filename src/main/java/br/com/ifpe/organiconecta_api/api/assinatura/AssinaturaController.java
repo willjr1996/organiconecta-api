@@ -61,4 +61,10 @@ public class AssinaturaController {
     assinaturaService.atualizarPlanoParaPago(id);
     return ResponseEntity.ok().build();
 }
+
+    @PutMapping("/{id}/desativarplano")
+    public ResponseEntity<Void> ativarPlanoGratis(@PathVariable("id") Long id) {
+    assinaturaService.atualizarPlanoParaGratis(id);
+    return ResponseEntity.ok().build();
+}
 }

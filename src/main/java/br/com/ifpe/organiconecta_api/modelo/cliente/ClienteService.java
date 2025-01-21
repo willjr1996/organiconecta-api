@@ -72,7 +72,7 @@ public class ClienteService {
         Assinatura assinatura = new Assinatura();
         assinatura.setCliente(cliente);
         assinatura.setDataInicio(LocalDate.now());
-        assinatura.setValidade(LocalDate.now().plusMonths(12));
+        assinatura.setValidade(LocalDate.of(2099, 12, 31));
         assinatura.setStatusAssinatura(false);
         // assinatura.setPlanoPreco(BigDecimal.ZERO);
         assinatura.setHabilitado(Boolean.TRUE);

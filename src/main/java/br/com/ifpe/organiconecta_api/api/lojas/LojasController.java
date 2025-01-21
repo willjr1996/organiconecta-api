@@ -2,6 +2,7 @@ package br.com.ifpe.organiconecta_api.api.lojas;
 
 import br.com.ifpe.organiconecta_api.modelo.lojas.Lojas;
 import br.com.ifpe.organiconecta_api.modelo.lojas.LojasService;
+import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,22 @@ public class LojasController {
     @Autowired
     private LojasService lojasService;
 
+    @Autowired
+   private ClienteService clienteService;
+
+
     @PostMapping
     public ResponseEntity<Lojas> save(
-            @RequestBody @Valid Lojas loja,
-            @RequestParam(required = true) Long clienteId) {
+            @RequestBody @Valid LojasRequest request)
+            {
 
-        Lojas novaLoja = lojasService.save(loja, clienteId);
-        return new ResponseEntity<>(novaLoja, HttpStatus.CREATED);
+                Lojas novaLoja = request.build();
+                novaLoja.setCliente(clienteService.obterPorID(request.getIdCliente()));
+                Lojas loja = lojasService.save(novaLoja);
+
+
+        
+        return new ResponseEntity<Lojas>(loja, HttpStatus.CREATED);
     }
 
     // Listar todas as lojas
@@ -45,10 +55,12 @@ public class LojasController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(
             @PathVariable("id") Long id,
-            @RequestBody @Valid Lojas loja,
-            @RequestParam(required = false) Long clienteId) {
+            @RequestBody @Valid LojasRequest request) {
 
-        lojasService.update(id, loja, clienteId);
+                Lojas loja = request.build();
+                loja.setCliente(clienteService.obterPorID(request.getIdCliente()));
+       lojasService.update(id, loja);
+
         return ResponseEntity.ok().build();
     }
 

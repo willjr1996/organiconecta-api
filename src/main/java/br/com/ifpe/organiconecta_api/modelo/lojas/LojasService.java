@@ -3,8 +3,6 @@ package br.com.ifpe.organiconecta_api.modelo.lojas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
-import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteRepository;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
@@ -15,16 +13,11 @@ public class LojasService {
     @Autowired
     private LojasRepository repository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    // @Autowired
+    // private ClienteRepository clienteRepository;
 
     @Transactional
-    public Lojas save(Lojas loja, Long clienteId) {
-
-
-        Cliente cliente = clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new RuntimeException("cliente não encontrado"));
-        loja.setCliente(cliente);
+    public Lojas save(Lojas loja) {
 
         loja.setHabilitado(Boolean.TRUE);
         return repository.save(loja);
@@ -43,22 +36,22 @@ public class LojasService {
 
     // Atualizar Loja e o cliente associado
     @Transactional
-    public void update(Long id, Lojas lojaAlterada, Long clienteId) {
-        Lojas lojaExistente = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Loja não encontrada"));
+    public void update(Long id, Lojas lojaAlterada) {
 
-        lojaExistente.setNomeLoja(lojaAlterada.getNomeLoja());
-        lojaExistente.setRegistroPropriedade(lojaAlterada.getRegistroPropriedade());
-        lojaExistente.setCertificacao(lojaAlterada.getCertificacao());
+         Lojas loja = repository.findById(id).get();
+         loja.setCliente(lojaAlterada.getCliente());
+         loja.setNomeLoja(lojaAlterada.getNomeLoja());
+        loja.setRegistroPropriedade(lojaAlterada.getRegistroPropriedade());
+        loja.setCertificacao(lojaAlterada.getCertificacao());
 
         // Atualizar cliente associado
-        if (clienteId != null) {
-            Cliente cliente = clienteRepository.findById(clienteId)
-                    .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-            lojaExistente.setCliente(cliente);
-        }
+        // if (clienteId != null) {
+        //     Cliente cliente = clienteRepository.findById(clienteId)
+        //             .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        //     lojaExistente.setCliente(cliente);
+        // }
 
-        repository.save(lojaExistente);
+        repository.save(loja);
     }
 
     // Deletar Loja
