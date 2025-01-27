@@ -23,9 +23,25 @@ public class AssinaturaService {
     @Autowired
     private TipoClienteRepository tipoClienteRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PerfilRepository perfilUsuarioRepository;
+
+
 
     @Transactional
 public Assinatura save(Assinatura assinatura) {
+
+    usuarioService.save(funcionario.getUsuario());
+
+       for (Perfil perfil : funcionario.getUsuario().getRoles()) {
+           perfil.setHabilitado(Boolean.TRUE);
+           perfilUsuarioRepository.save(perfil);
+       }
+
+
     assinatura.setHabilitado(Boolean.TRUE);
     return repository.save(assinatura);
 }
@@ -81,7 +97,9 @@ public Assinatura save(Assinatura assinatura) {
    
         cliente.setTipoCliente(tipoClienteProdutor);
 
-    // Salva as alterações no cliente
+        cliente.getUsuario().getRoles().remove(perfilUsuarioRepository.findByNome(Perfil.ROLE_CLIENTE));
+        cliente.getUsuario().getRoles().add(perfilUsuarioRepository.findByNome(Perfil.ROLE_CLIENTE_PRODUTOR));
+    
          clienteRepository.save(cliente);
 }
 
@@ -90,7 +108,7 @@ public Assinatura save(Assinatura assinatura) {
         Assinatura assinatura = repository.findById(assinaturaId)
                 .orElseThrow(() -> new RuntimeException("Assinatura não encontrada"));
 
-        // Atualizar tipo de plano
+        
         assinatura.setValidade(LocalDate.of(2099, 12, 31));
         assinatura.setStatusAssinatura(false); 
         repository.save(assinatura);
@@ -101,7 +119,9 @@ public Assinatura save(Assinatura assinatura) {
    
         cliente.setTipoCliente(tipoCliente);
 
-    // Salva as alterações no cliente
+        cliente.getUsuario().getRoles().remove(perfilUsuarioRepository.findByNome(Perfil.ROLE_CLIENTE_PRODUTOR));
+        cliente.getUsuario().getRoles().add(perfilUsuarioRepository.findByNome(Perfil.ROLE_CLIENTE));
+
          clienteRepository.save(cliente);
 }
 

@@ -54,6 +54,11 @@ public class Assinatura extends EntidadeAuditavel {
    @OneToOne
    private Cliente cliente;
 
+   @OneToOne
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
+
+
 
 
 
