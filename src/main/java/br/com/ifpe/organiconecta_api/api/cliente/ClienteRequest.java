@@ -47,14 +47,14 @@ public class ClienteRequest {
     private String password;
 
     public Usuario buildUsuario() {
-       return Usuario.builder()
-           .username(email)
-           .password(password)
-           .roles(Arrays.asList(new Perfil(Perfil.ROLE_CLIENTE)))
-           .build();
-   }
-   
-   public Cliente build() {
+        return Usuario.builder()
+            .username(email)
+            .password(password)
+            .roles(Arrays.asList(new Perfil(Perfil.ROLE_CLIENTE)))
+            .build();
+    }
+
+    public Cliente build() {
     return Cliente.builder()
         .usuario(buildUsuario())
         .nome(nome)

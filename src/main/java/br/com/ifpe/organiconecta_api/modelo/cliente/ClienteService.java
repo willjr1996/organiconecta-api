@@ -13,8 +13,6 @@ import br.com.ifpe.organiconecta_api.modelo.acesso.UsuarioService;
 import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura;
 import br.com.ifpe.organiconecta_api.modelo.assinatura.AssinaturaService;
 import br.com.ifpe.organiconecta_api.modelo.mensagens.EmailService;
-import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
-import br.com.ifpe.organiconecta_api.modelo.pedido.PedidoRepository;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteRepository;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteService;
@@ -79,7 +77,7 @@ public class ClienteService {
         assinaturaService.save(assinatura);
         
         //enviar email após cadastro do cliente
-        emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
+        //emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
         return cliente;
     }
 
@@ -127,44 +125,6 @@ public class ClienteService {
         repository.save(cliente);
 
     }
-
-    // @Transactional
-    // public Pedido adicionarPedidoCliente(Long clienteId, Pedido pedido) {
-
-    // Cliente cliente = this.obterPorID(clienteId);
-
-    // // Primeiro salva o pedido:
-
-    // pedido.setCliente(cliente);
-    // pedido.setHabilitado(Boolean.TRUE);
-    // pedidoRepository.save(pedido);
-
-    // Depois acrescenta o pedido criado ao cliente e atualiza o cliente:
-
-    // List<Pedido> listaPedidoCliente = cliente.getPedidos();
-
-    // if (listaPedidoCliente == null) {
-    // listaPedidoCliente = new ArrayList<Pedido>();
-    // }
-
-    // listaPedidoCliente.add(pedido);
-    // cliente.setPedidos(listaPedidoCliente);
-    // repository.save(cliente);
-
-    // return pedido;
-    // }
-
-    // @Transactional
-    // public void removerPedidoCliente(Long idPedido) {
-
-    // Pedido pedido = pedidoRepository.findById(idPedido).get();
-    // pedido.setHabilitado(Boolean.FALSE);
-    // pedidoRepository.save(pedido);
-
-    // Cliente cliente = this.obterPorID(pedido.getCliente().getId());
-    // cliente.getPedidos().remove(pedido);
-    // repository.save(cliente);
-    // }
 
     // Endereço
     public EnderecoCliente obterEnderecoPorID(Long id) {

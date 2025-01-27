@@ -2,8 +2,6 @@ package br.com.ifpe.organiconecta_api.api.produto;
 
 import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
 
-import java.math.BigDecimal;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,7 +21,7 @@ public class ProdutoRequest {
     private String produtoDescricao;
 
     @NotNull(message = "A inclusão do preço é obrigatória.")
-    private BigDecimal produtoPreco;
+    private double produtoPreco;
 
     @NotBlank(message = "A inclusão da imagem é obrigatória.")
     private String produtoImagem;
