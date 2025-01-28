@@ -79,7 +79,7 @@ public class ClienteService {
         assinaturaService.save(assinatura);
         
         //enviar email após cadastro do cliente
-        emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
+       // emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
         return cliente;
     }
 

@@ -1,8 +1,12 @@
 package br.com.ifpe.organiconecta_api.config;
 
 
+
+
 import java.util.Arrays;
 import java.util.List;
+
+
 
 
 import org.springframework.context.annotation.Bean;
@@ -19,9 +23,13 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
+
+
 import br.com.ifpe.organiconecta_api.modelo.acesso.Perfil;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.seguranca.JwtAuthenticationFilter;
+
+
 
 
 @Configuration
@@ -29,8 +37,12 @@ import br.com.ifpe.organiconecta_api.modelo.seguranca.JwtAuthenticationFilter;
 public class SecurityConfiguration {
 
 
+
+
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
 
 
     public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider) {
@@ -39,14 +51,20 @@ public class SecurityConfiguration {
     }
 
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+
 
 
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(c -> c.disable())
             .authorizeHttpRequests(authorize -> authorize
+
+
 
 
                 .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
@@ -57,32 +75,40 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
 
 
+
+
                 // PERMISSÕES DE ACESSO DE PRODUTO
                 .requestMatchers("/api/produto").hasAnyAuthority(
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
+
 
                    .requestMatchers(HttpMethod.GET, "/api/produto").hasAnyAuthority(
                    Perfil.ROLE_CLIENTE,
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
+
                    .requestMatchers(HttpMethod.GET, "/api/produto/*").hasAnyAuthority(
                    Perfil.ROLE_CLIENTE,
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
-                
-                // PERMISSÕES DE ACESSO DE PRODUTO
+
+               
+                // PERMISSÕES DE ACESSO DE TIPOCLIENTE
                 .requestMatchers(HttpMethod.GET, "/api/tipocliente").hasAnyAuthority(              
                     Perfil.ROLE_FUNCIONARIO_ADMIN)
                
+
+
 
 
                 // PERMISSÕES DE ACESSO DE LOJAS
                 .requestMatchers("/api/lojas").hasAnyAuthority(
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
+
 
                    .requestMatchers(HttpMethod.GET, "/api/lojas").hasAnyAuthority(
                     Perfil.ROLE_CLIENTE,
@@ -95,52 +121,60 @@ public class SecurityConfiguration {
                     Perfil.ROLE_CLIENTE_PRODUTOR)
 
 
+
+
                // PERMISSÕES DE ACESSO DE REDEFINIR SENHA
                 .requestMatchers("/api/redefinir").hasAnyAuthority(
                    Perfil.ROLE_CLIENTE,
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
-               
-                
 
-                
 
                
-                .requestMatchers(HttpMethod.POST,"/api/lojas").permitAll()
-                // .requestMatchers(HttpMethod.POST, "/api/lojas").hasAnyAuthority(
-                //    Perfil.ROLE_FUNCIONARIO_ADMIN,
-                //     Perfil.ROLE_CLIENTE_PRODUTOR)
-
-
-                .requestMatchers(HttpMethod.GET, "/api/assinatura/{id}/ativarplano").permitAll()
-                // .requestMatchers(HttpMethod.GET, "/api/lojas/").hasAnyAuthority(
-                //    Perfil.ROLE_CLIENTE,
-                //    Perfil.ROLE_FUNCIONARIO_ADMIN,
-                //    Perfil.ROLE_CLIENTE_PRODUTOR)
-
-                .requestMatchers(HttpMethod.GET, "/api/assinatura/{id}/desativarplano").permitAll()
-                // .requestMatchers(HttpMethod.GET, "/api/lojas/").hasAnyAuthority(
-                //    Perfil.ROLE_FUNCIONARIO_ADMIN,
-                //    Perfil.ROLE_CLIENTE_PRODUTOR)
-
-                .requestMatchers(HttpMethod.POST, "/api/pedido").permitAll()
-                // .requestMatchers(HttpMethod.GET, "/api/lojas/").hasAnyAuthority(
-                //    Perfil.ROLE_CLIENTE,
-                //    Perfil.ROLE_FUNCIONARIO_ADMIN,
-                //    Perfil.ROLE_CLIENTE_PRODUTOR)
-
-                //.requestMatchers(HttpMethod.POST, "/api/pedido").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/pedido/cliente/*").hasAnyAuthority(
+               // PERMISSÕES DE ACESSO DE ATIVAR/DESATIVAR PLANO
+                .requestMatchers(HttpMethod.GET, "/api/assinatura/{id}/ativarplano").hasAnyAuthority(
                    Perfil.ROLE_CLIENTE,
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
-                   .requestMatchers(HttpMethod.DELETE, "/api/pedido/cliente/*").hasAnyAuthority(
+
+                .requestMatchers(HttpMethod.GET, "/api/assinatura/{id}/desativarplano").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+
+
+
+                // PERMISSÕES DE ACESSO DE PEDIDO
+                .requestMatchers("/api/pedido").hasAnyAuthority(
                    Perfil.ROLE_CLIENTE,
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
+
+
+
+
+               
+                // .requestMatchers(HttpMethod.DELETE, "/api/cliente/*").hasAnyAuthority(
+                //    Perfil.ROLE_CLIENTE,
+                //    Perfil.ROLE_FUNCIONARIO_ADMIN,
+                //    Perfil.ROLE_CLIENTE_PRODUTOR)
+
+
+                //    .requestMatchers(HttpMethod.DELETE, "/api/pedido/cliente/*").hasAnyAuthority(
+                //    Perfil.ROLE_CLIENTE,
+                //    Perfil.ROLE_FUNCIONARIO_ADMIN,
+                //    Perfil.ROLE_CLIENTE_PRODUTOR)
              
                
+
+
+
+
+
+
+
+
 
 
 
@@ -152,6 +186,8 @@ public class SecurityConfiguration {
                 .anyRequest().authenticated()
 
 
+
+
             )
             .sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -160,14 +196,22 @@ public class SecurityConfiguration {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 
+
+
         return http.build();
     }
+
+
 
 
     public CorsConfigurationSource corsConfigurationSource() {
 
 
+
+
         CorsConfiguration configuration = new CorsConfiguration();
+
+
 
 
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));

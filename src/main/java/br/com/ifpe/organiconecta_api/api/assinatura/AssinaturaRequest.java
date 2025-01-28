@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;

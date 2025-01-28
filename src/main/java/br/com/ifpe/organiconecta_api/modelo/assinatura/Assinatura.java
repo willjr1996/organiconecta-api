@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
