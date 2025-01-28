@@ -7,7 +7,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
+
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
@@ -56,9 +56,9 @@ public class Assinatura extends EntidadeAuditavel {
    @OneToOne
    private Cliente cliente;
 
-   @OneToOne
-    @JoinColumn(nullable = false)
-    private Usuario usuario;
+//    @OneToOne
+//     @JoinColumn(nullable = false)
+//     private Usuario usuario;
 
 
 

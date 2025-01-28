@@ -3,17 +3,18 @@ package br.com.ifpe.organiconecta_api.modelo.assinatura;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 
 import br.com.ifpe.organiconecta_api.modelo.acesso.Perfil;
-import br.com.ifpe.organiconecta_api.modelo.acesso.PerfilRepository;
-import br.com.ifpe.organiconecta_api.modelo.acesso.UsuarioService;
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
 import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteRepository;
+import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteService;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoClienteRepository;
 
 
@@ -28,34 +29,18 @@ public class AssinaturaService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    @Lazy
+    private ClienteService clienteService;
+
 
     @Autowired
     private TipoClienteRepository tipoClienteRepository;
 
 
-    @Autowired
-    private UsuarioService usuarioService;
-
-
-    @Autowired
-    private PerfilRepository perfilUsuarioRepository;
-
-
-
-
-
 
     @Transactional
 public Assinatura save(Assinatura assinatura) {
-
-
-    usuarioService.save(assinatura.getUsuario());
-
-
-       for (Perfil perfil : assinatura.getUsuario().getRoles()) {
-           perfil.setHabilitado(Boolean.TRUE);
-           perfilUsuarioRepository.save(perfil);
-       }
 
 
 
@@ -136,7 +121,8 @@ public Assinatura save(Assinatura assinatura) {
         cliente.getUsuario().getRoles().remove(new Perfil(Perfil.ROLE_CLIENTE));
         cliente.getUsuario().getRoles().add(new Perfil(Perfil.ROLE_CLIENTE_PRODUTOR));
    
-         clienteRepository.save(cliente);
+         clienteService.save(cliente);
+       
 }
 
 
@@ -163,8 +149,8 @@ public Assinatura save(Assinatura assinatura) {
         cliente.getUsuario().getRoles().remove(new Perfil(Perfil.ROLE_CLIENTE_PRODUTOR));
         cliente.getUsuario().getRoles().add(new Perfil(Perfil.ROLE_CLIENTE));
 
-
-         clienteRepository.save(cliente);
+        clienteService.save(cliente);
+       
 }
 
 

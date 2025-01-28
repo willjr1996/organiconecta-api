@@ -4,10 +4,8 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.assinatura.Assinatura;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,12 +32,6 @@ public class AssinaturaRequest {
     @NotNull(message = "A escolha do status da assinatura é obrigatória.")
     private Boolean statusAssinatura;
 
-    @NotBlank
-    private String email;
-
-    @NotBlank
-    private String password;
-
 
     // @NotNull(message = "A escolha do tipo do plano é obrigatória.")
     // private TipoPlanoEnum tipoPlano;
@@ -50,7 +42,6 @@ public class AssinaturaRequest {
     public Assinatura build() {
 
         return Assinatura.builder()
-                .usuario(buildUsuario())
                 .dataInicio(dataInicio)
                 .validade(validade)
                 .statusAssinatura(statusAssinatura)
@@ -59,12 +50,5 @@ public class AssinaturaRequest {
                 .build();
     }
 
-    public Usuario buildUsuario() {
-
-        return Usuario.builder()
-                .username(email)
-                .password(password)
-                .build();
-    }
 
 }

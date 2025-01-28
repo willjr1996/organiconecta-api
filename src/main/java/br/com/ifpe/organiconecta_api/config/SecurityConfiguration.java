@@ -70,7 +70,6 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/tipocliente/inicializar").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/tipocliente").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api-docs/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
 
@@ -132,13 +131,13 @@ public class SecurityConfiguration {
 
                
                // PERMISSÕES DE ACESSO DE ATIVAR/DESATIVAR PLANO
-                .requestMatchers(HttpMethod.GET, "/api/assinatura/{id}/ativarplano").hasAnyAuthority(
+                .requestMatchers(HttpMethod.PUT, "/api/assinatura/{id}/ativarplano").hasAnyAuthority(
                    Perfil.ROLE_CLIENTE,
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
 
-                .requestMatchers(HttpMethod.GET, "/api/assinatura/{id}/desativarplano").hasAnyAuthority(
+                .requestMatchers(HttpMethod.PUT, "/api/assinatura/{id}/desativarplano").hasAnyAuthority(
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
