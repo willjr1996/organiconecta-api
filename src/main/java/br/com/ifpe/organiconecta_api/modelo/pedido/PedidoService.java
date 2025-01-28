@@ -62,28 +62,25 @@ public class PedidoService {
         return pedidoRepository.findByCliente(cliente);
     }
 
-    
-    
+    @Transactional
+    public void excluirPedidoDeCliente(Long pedidoId, Long clienteId) {
+        // Verifica se o cliente existe
+        Cliente cliente = clienteService.obterPorID(clienteId);
+        if (cliente == null) {
+            throw new EntityNotFoundException("Cliente com ID " + clienteId + " não encontrado.");
+        }
 
-    // @Transactional
-    // public void excluirPedidoDeCliente(Long clienteId, Long pedidoId) {
-    //     // Verifica se o cliente existe
-    //     Cliente cliente = clienteService.obterPorID(clienteId);
-    //     if (cliente == null) {
-    //         throw new EntityNotFoundException("Cliente com ID " + clienteId + " não encontrado.");
-    //     }
+        // Busca o pedido e verifica se ele pertence ao cliente
+        Pedido pedido = pedidoRepository.findById(pedidoId)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido com ID " + pedidoId + " não encontrado."));
 
-    //     // Busca o pedido e verifica se ele pertence ao cliente
-    //     Pedido pedido = pedidoRepository.findById(pedidoId)
-    //             .orElseThrow(() -> new EntityNotFoundException("Pedido com ID " + pedidoId + " não encontrado."));
+        if (!pedido.getCliente().getId().equals(clienteId)) {
+            throw new IllegalArgumentException(
+                    "Pedido com ID " + pedidoId + " não pertence ao cliente com ID " + clienteId);
+        }
 
-    //     if (!pedido.getCliente().getId().equals(clienteId)) {
-    //         throw new IllegalArgumentException(
-    //                 "Pedido com ID " + pedidoId + " não pertence ao cliente com ID " + clienteId);
-    //     }
-
-    //     pedido.setHabilitado(Boolean.FALSE);
-    //     pedidoRepository.save(pedido);
-    // }
+        pedido.setHabilitado(Boolean.FALSE);
+        pedidoRepository.save(pedido);
+    }
 
 }

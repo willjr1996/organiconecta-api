@@ -75,30 +75,14 @@ public class PedidoController {
         List<Pedido> pedidos = pedidoService.listarPedidosPorCliente(clienteId);
         return ResponseEntity.ok(pedidos);
     }
-
-    // //Consultar pedido por pedidoId
-    // @GetMapping("/{pedidoId}")
-    // public ResponseEntity<Pedido> obterPedido(@PathVariable Long pedidoId) {
-    //     Pedido pedido = pedidoService.obterPorId(pedidoId);
-    //     return ResponseEntity.ok(pedido);
-    // }
-
-    // Vamos assumir que você já tem a listagem de pedidos implementada e descomentamos para nossa finalidade.
-
-
-
-
-
-
-
-
-    // //Remove o pedido pelo IdProduto, se pertencer ao cliente determinado pelo ClienteoID
-    // @DeleteMapping("/cliente/{clienteId}/pedido/{pedidoId}")
-    // public ResponseEntity<Void> excluirPedidoDeCliente(
-    //         @PathVariable Long clienteId,
-    //         @PathVariable Long pedidoId) {
-    //     pedidoService.excluirPedidoDeCliente(clienteId, pedidoId);
-    //     return ResponseEntity.noContent().build();
-    // }
+    
+    //Remove o pedido pelo IdPedido, se pertencer ao cliente determinado pelo ClienteoID
+    @DeleteMapping("/{pedidoId}/cliente/{clienteId}")
+    public ResponseEntity<Void> excluirPedidoDeCliente(
+            @PathVariable Long pedidoId,
+            @PathVariable Long clienteId) {
+        pedidoService.excluirPedidoDeCliente(pedidoId, clienteId);
+        return ResponseEntity.noContent().build();
+    }
 
 }
