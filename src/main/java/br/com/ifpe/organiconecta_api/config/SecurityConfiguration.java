@@ -73,11 +73,41 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/api-docs/*").permitAll()
                 .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
 
+                // PERMISSÕES DE ACESSO DE CLIENTE
+                   .requestMatchers(HttpMethod.PUT,"/api/cliente/*").hasAnyAuthority(
+                    Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+                   .requestMatchers(HttpMethod.DELETE,"/api/cliente/*").hasAnyAuthority(
+                    Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+
+                   .requestMatchers(HttpMethod.GET, "/api/cliente").hasAnyAuthority(
+                   Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+
+                   .requestMatchers(HttpMethod.GET, "/api/cliente/*").hasAnyAuthority(
+                   Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
 
 
 
                 // PERMISSÕES DE ACESSO DE PRODUTO
-                .requestMatchers("/api/produto").hasAnyAuthority(
+                .requestMatchers(HttpMethod.POST,"/api/produto").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+                   .requestMatchers(HttpMethod.PUT,"/api/produto/*").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+                   .requestMatchers(HttpMethod.DELETE,"/api/produto/*").hasAnyAuthority(
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
@@ -97,27 +127,35 @@ public class SecurityConfiguration {
                
                 // PERMISSÕES DE ACESSO DE TIPOCLIENTE
                 .requestMatchers(HttpMethod.GET, "/api/tipocliente").hasAnyAuthority(              
-                    Perfil.ROLE_FUNCIONARIO_ADMIN)
+                    Perfil.ROLE_FUNCIONARIO_ADMIN,
+                    Perfil.ROLE_CLIENTE_PRODUTOR)
                
 
 
-
-
                 // PERMISSÕES DE ACESSO DE LOJAS
-                .requestMatchers("/api/lojas").hasAnyAuthority(
+                .requestMatchers(HttpMethod.POST,"/api/lojas").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+                   .requestMatchers(HttpMethod.PUT,"/api/lojas/*").hasAnyAuthority(
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+                   .requestMatchers(HttpMethod.DELETE,"/api/lojas/*").hasAnyAuthority(
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
 
                    .requestMatchers(HttpMethod.GET, "/api/lojas").hasAnyAuthority(
-                    Perfil.ROLE_CLIENTE,
-                    Perfil.ROLE_FUNCIONARIO_ADMIN,
-                    Perfil.ROLE_CLIENTE_PRODUTOR)
- 
-                    .requestMatchers(HttpMethod.GET, "/api/lojas/*").hasAnyAuthority(
-                    Perfil.ROLE_CLIENTE,
-                    Perfil.ROLE_FUNCIONARIO_ADMIN,
-                    Perfil.ROLE_CLIENTE_PRODUTOR)
+                   Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+
+                   .requestMatchers(HttpMethod.GET, "/api/lojas/*").hasAnyAuthority(
+                   Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
 
 
 
@@ -136,12 +174,9 @@ public class SecurityConfiguration {
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
 
-
                 .requestMatchers(HttpMethod.PUT, "/api/assinatura/{id}/desativarplano").hasAnyAuthority(
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
-
-
 
 
                 // PERMISSÕES DE ACESSO DE PEDIDO
@@ -154,10 +189,7 @@ public class SecurityConfiguration {
 
 
                
-                // .requestMatchers(HttpMethod.DELETE, "/api/cliente/*").hasAnyAuthority(
-                //    Perfil.ROLE_CLIENTE,
-                //    Perfil.ROLE_FUNCIONARIO_ADMIN,
-                //    Perfil.ROLE_CLIENTE_PRODUTOR)
+                
 
 
                 //    .requestMatchers(HttpMethod.DELETE, "/api/pedido/cliente/*").hasAnyAuthority(
