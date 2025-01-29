@@ -1,4 +1,8 @@
-<<<<<<< HEAD
+Antes de rodar o projeto
+
+Dar POST nessa seguinte rota:
+localhost:8080/api/tipocliente/inicializar
+
 ENDEREÇO
 
 {
@@ -30,24 +34,5 @@ LOJAS
     "registroPropriedade": "LJDSADSD2025",
     "certificacao": "PDF"
 }
-=======
-CLIENTE
 
-{
-    "email": "jaidene@teste.com",
-    "password": "2407",
-    "nome": "Jaidene",
-    "senha": "2407",
-    "telefone": "81 981310102",
-    "cpf": "839.641.810-13",
-    "dataNascimento": "24/07/1992"
-}
 
-AUTH
-{
-    "username": "jade@teste.com",
-    "password": "2407"
-
-}
-
->>>>>>> remotes/origin/back2-jaidene
