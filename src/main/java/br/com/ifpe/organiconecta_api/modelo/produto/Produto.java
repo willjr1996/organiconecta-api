@@ -1,6 +1,5 @@
 package br.com.ifpe.organiconecta_api.modelo.produto;
 
-import java.math.BigDecimal;
 import org.hibernate.annotations.SQLRestriction;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
@@ -22,15 +21,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Produto extends EntidadeAuditavel {
-    
+   
    @Column (nullable = false, length = 100)
    private String produtoNome;
 
    @Column (nullable = false)
    private String produtoDescricao;
 
-   @Column (precision = 7, scale = 2)
-   private BigDecimal produtoPreco;
+   @Column
+   private double produtoPreco;
    
    @Column (nullable = false)
    private String produtoImagem;

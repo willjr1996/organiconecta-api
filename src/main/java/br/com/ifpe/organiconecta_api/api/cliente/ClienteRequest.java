@@ -54,7 +54,7 @@ public class ClienteRequest {
             .build();
     }
 
-   public Cliente build() {
+    public Cliente build() {
     return Cliente.builder()
         .usuario(buildUsuario())
         .nome(nome)

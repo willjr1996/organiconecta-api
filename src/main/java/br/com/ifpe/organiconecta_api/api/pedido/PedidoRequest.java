@@ -1,9 +1,13 @@
 package br.com.ifpe.organiconecta_api.api.pedido;
 
+import br.com.ifpe.organiconecta_api.api.itemPedido.ItemPedidoRequest;
 import br.com.ifpe.organiconecta_api.modelo.pedido.Pedido;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,18 +25,14 @@ import lombok.NoArgsConstructor;
 
 public class PedidoRequest {
 
-    private BigDecimal valorTotal;
+    @NotNull
+    private Long idCliente;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataEmissao;
+    @NotNull
+    private List<ItemPedidoRequest> itens;
 
-    public Pedido build() {
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private LocalDateTime dataCompra;
 
-       return Pedido.builder()
-           .valorTotal(valorTotal)
-           .dataEmissao(dataEmissao)
-         
-           .build();
-   }
 
 }

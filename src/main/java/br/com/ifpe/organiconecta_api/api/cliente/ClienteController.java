@@ -52,10 +52,10 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-       public ResponseEntity<Void> delete(@PathVariable Long id) {
-       clienteService.delete(id);
-       return ResponseEntity.ok().build();
-   }
+        public ResponseEntity<Void> delete(@PathVariable Long id) {
+        clienteService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 
     //Cadastrando o pedido do cliente
 //     @PostMapping("/pedido/{clienteId}")

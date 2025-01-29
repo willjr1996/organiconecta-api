@@ -40,7 +40,7 @@ public class ProdutoController {
 
     @GetMapping("/{id}")
         public Produto obterPorID(@PathVariable Long id) {
-        return produtoService.obterPorID(id);
+        return produtoService.obterPorId(id);
     }
 
     @PutMapping("/{id}")
@@ -50,18 +50,18 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{id}")
-       public ResponseEntity<Void> delete(@PathVariable Long id) {
-       produtoService.delete(id);
-       return ResponseEntity.ok().build();
-   }
+        public ResponseEntity<Void> delete(@PathVariable Long id) {
+        produtoService.delete(id);
+        return ResponseEntity.ok().build();
+    }
 
-   @PostMapping("/filtrar")
-   public List<Produto> filtrar(
-           @RequestParam(value = "produtoCodigo", required = false) String produtoCodigo,
-           @RequestParam(value = "produtoNome", required = false) String produtoNome,
-           @RequestParam(value = "produtoCategoria", required = false) String produtoCategoria) {
+    @PostMapping("/filtrar")
+    public List<Produto> filtrar(
+        @RequestParam(value = "produtoCodigo", required = false) String produtoCodigo,
+        @RequestParam(value = "produtoNome", required = false) String produtoNome,
+        @RequestParam(value = "produtoCategoria", required = false) String produtoCategoria) {
 
-       return produtoService.filtrar(produtoCodigo, produtoNome, produtoCategoria);
-   }
+        return produtoService.filtrar(produtoCodigo, produtoNome, produtoCategoria);
+    }
 
 }
