@@ -1,6 +1,4 @@
-Antes de rodar o projeto
-
-Dar POST nessa seguinte rota:
+Antes de rodar o projeto: Dar POST nessa seguinte rota:
 localhost:8080/api/tipocliente/inicializar
 
 ENDEREÇO
@@ -33,6 +31,31 @@ LOJAS
     "nomeLoja": "Zé do melão",
     "registroPropriedade": "LJDSADSD2025",
     "certificacao": "PDF"
+}
+
+FUNCIONARIO/ADMINISTRADOR
+
+ADMIN: "tipo": "Administrador",
+OPERADOR: "tipo": "Operador",
+
+{
+  "email": "joao@example.com",
+  "password": "123",
+  "tipo": "Administrador",
+  "nome": "João Silva",
+  "cpf": "123.456.789-00",
+  "rg": "12.345.678-9",
+  "dataNascimento": "15/08/1990",
+  "foneCelular": "(81) 98765-4321",
+  "foneFixo": "(81) 3456-7890",
+  "salario": 5000.00,
+  "enderecoRua": "Rua das Flores",
+  "enderecoNumero": "123",
+  "enderecoBairro": "Centro",
+  "enderecoCidade": "São Paulo",
+  "enderecoCep": "01000-000",
+  "enderecoUf": "SP",
+  "enderecoComplemento": "Apartamento 45"
 }
 
 

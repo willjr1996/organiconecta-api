@@ -39,6 +39,12 @@ public class Lojas extends EntidadeAuditavel {
 
    @OneToOne 
    private Cliente cliente;
+
+   @Column (nullable = false)
+   private String perfilLojaImagem;
+
+   @Column (nullable = false)
+   private String capaLojaImagem;
    
   
 }

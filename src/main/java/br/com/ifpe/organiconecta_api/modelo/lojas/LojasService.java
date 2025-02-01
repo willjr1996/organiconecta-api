@@ -43,6 +43,8 @@ public class LojasService {
          loja.setNomeLoja(lojaAlterada.getNomeLoja());
         loja.setRegistroPropriedade(lojaAlterada.getRegistroPropriedade());
         loja.setCertificacao(lojaAlterada.getCertificacao());
+        loja.setPerfilLojaImagem(lojaAlterada.getPerfilLojaImagem());
+        loja.setCapaLojaImagem(lojaAlterada.getCapaLojaImagem());
 
         // Atualizar cliente associado
         // if (clienteId != null) {
