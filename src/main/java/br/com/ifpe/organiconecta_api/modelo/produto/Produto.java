@@ -30,6 +30,9 @@ public class Produto extends EntidadeAuditavel {
 
    @Column
    private double produtoPreco;
+
+   @Column (nullable = false)
+   private Integer produtoQuantidade;
    
    @Column (nullable = false)
    private String produtoImagem;
@@ -39,6 +42,5 @@ public class Produto extends EntidadeAuditavel {
 
    @Column (nullable = false)
    private String produtoCodigo;
-
-   
+  
 }

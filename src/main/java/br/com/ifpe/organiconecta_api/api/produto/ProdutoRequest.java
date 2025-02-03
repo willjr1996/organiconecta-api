@@ -32,6 +32,9 @@ public class ProdutoRequest {
     @NotBlank(message = "A inclusão do código é obrigatória.")
     private String produtoCodigo;
 
+    @NotNull (message = "A inclusão da quantidade do prdduto em estoque é obrigatória.")
+    private Integer produtoQuantidade;
+
     public Produto build() {
 
         return Produto.builder()
@@ -41,6 +44,7 @@ public class ProdutoRequest {
                 .produtoImagem(produtoImagem)
                 .produtoCategoria(produtoCategoria)
                 .produtoCodigo(produtoCodigo)
+                .produtoQuantidade(produtoQuantidade)
                 .build();
     }
 }
