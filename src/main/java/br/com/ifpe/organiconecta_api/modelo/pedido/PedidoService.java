@@ -12,32 +12,52 @@ import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteService;
 import br.com.ifpe.organiconecta_api.modelo.itemPedido.ItemPedido;
 import br.com.ifpe.organiconecta_api.modelo.itemPedido.ItemPedidoRepository;
+import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
+import br.com.ifpe.organiconecta_api.modelo.produto.ProdutoService;
 
 @Service
 public class PedidoService {
-    
+
     @Autowired
     private PedidoRepository pedidoRepository;
 
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
 
-    @Autowired  
+    @Autowired
     private ClienteService clienteService;
+    
+    @Autowired
+    private ProdutoService produtoService;
 
     @Transactional
     public Pedido salvarPedido(Pedido pedido) {
-        
+
         pedido.setDataCompra(LocalDateTime.now());
 
         Double valorTotal = 0.0;
+
         for (ItemPedido itemPedido : pedido.getItens()) {
+            // Busca o produto mais atualizado do banco
+            Produto produto = produtoService.obterPorId(itemPedido.getProduto().getId());
+
+            // Verifica se há estoque suficiente
+            if (produto.getProdutoQuantidade() < itemPedido.getQuantidade()) {
+                throw new IllegalArgumentException(
+                        "Quantidade insuficiente para o produto: " + produto.getProdutoNome());
+            }
+
+            // Desconta a quantidade do estoque
+            produto.setProdutoQuantidade(produto.getProdutoQuantidade() - itemPedido.getQuantidade());
+            produtoService.update(produto.getId(), produto);
+
+            // Calcula o valor total
             valorTotal += itemPedido.getValorUnitario() * itemPedido.getQuantidade();
         }
 
         pedido.setValorTotal(valorTotal);
         pedido.setHabilitado(Boolean.TRUE);
-        
+
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
         for (ItemPedido itemPedido : pedido.getItens()) {
@@ -46,10 +66,10 @@ public class PedidoService {
 
             itemPedidoRepository.save(itemPedido);
         }
-        
+
         return pedidoSalvo;
     }
-    
+
     @Transactional
     public Pedido obterPorId(Long pedidoId) {
         return pedidoRepository.findById(pedidoId)

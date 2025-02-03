@@ -195,11 +195,24 @@ public class SecurityConfiguration {
 
 
                 // PERMISSÕES DE ACESSO DE PEDIDO
-                .requestMatchers("/api/pedido").hasAnyAuthority(
+                .requestMatchers(HttpMethod.POST,"/api/pedido").hasAnyAuthority(
                    Perfil.ROLE_CLIENTE,
                    Perfil.ROLE_FUNCIONARIO_ADMIN,
                    Perfil.ROLE_FUNCIONARIO_USER,
                    Perfil.ROLE_CLIENTE_PRODUTOR)
+
+                   .requestMatchers(HttpMethod.GET, "/api/pedido/*").hasAnyAuthority(
+                   Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_FUNCIONARIO_USER,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
+                   .requestMatchers(HttpMethod.DELETE, "/api/pedido/{clienteId}/cliente/{clienteId}").hasAnyAuthority(
+                   Perfil.ROLE_CLIENTE,
+                   Perfil.ROLE_FUNCIONARIO_ADMIN,
+                   Perfil.ROLE_FUNCIONARIO_USER,
+                   Perfil.ROLE_CLIENTE_PRODUTOR)
+
 
 
 

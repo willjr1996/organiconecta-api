@@ -40,7 +40,7 @@ public class Produto extends EntidadeAuditavel {
    @Column (nullable = false)
    private String produtoCategoria;
 
-   @Column (nullable = false)
+   @Column (nullable = false, unique = true)
    private String produtoCodigo;
   
 }
