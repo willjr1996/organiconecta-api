@@ -2,6 +2,7 @@ package br.com.ifpe.organiconecta_api.api.produto;
 
 import java.util.List;
 
+import br.com.ifpe.organiconecta_api.modelo.lojas.Lojas;
 import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
 
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +17,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProdutoRequest {
+    
+    private Long idLojas;
 
     //@NotNull(message = "A escolha do nome do produto é obrigatória.")
     private String produtoNome;

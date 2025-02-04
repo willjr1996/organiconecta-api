@@ -59,5 +59,69 @@ OPERADOR: "tipo": "Operador",
 }
 
 
-Cl
 
+"email": "joao@gmail.com",
+"password": "123",
+"nome": "João Silva",
+"telefone": "(81) 98765-4321",
+"cpf": "986.986.340-01",
+"dataNascimento": "15/08/1990",
+"clienteImagem": "dsladsladjsaldsa"
+
+CLIENTE
+
+{
+  "email": "joao@gmail.com",
+  "password": "123",
+  "nome": "João Silva",
+  "telefone": "(81) 98765-4321",
+  "cpf": "986.986.340-01",
+  "dataNascimento": "15/08/1990",
+  "clienteImagem": "dsladsladjsaldsa"
+
+}
+
+PRODUTO
+{
+    "idLojas": 1,
+    "produtoNome": "Maçã Orgânica",
+    "produtoDescricao": "Maçã fresca e orgânica",
+    "produtoPreco": 5.50,
+    "produtoCategoria": "Frutas",
+    "produtoCodigo": "MAC123",
+    "produtoQuantidade": 10,
+    "produtoImagens": [
+        "http://exemplo.com/imagem1.jpg",
+        "http://exemplo.com/imagem2.jpg"
+    ]
+}
+
+LOJAS
+
+{
+    "nomeLoja": "Organicos da Serra",
+    "registroPropriedade": "123456789",
+    "certificacao": "Certificado Orgânico ABC",
+    "capaLojaImagem": "http://exemplo.com/imagens/capa_loja.jpg",
+    "perfilLojaImagem": "http://exemplo.com/imagens/perfil_loja.jpg",
+    "idCliente": 2
+}
+
+
+PEDIDO
+
+{
+  "idCliente": 1,
+  "itens": [
+    {
+      "idProduto": 1,
+      "quantidade": 2,
+      "valorUnitario": 5.50
+    },
+    {
+      "idProduto": 2,
+      "quantidade": 1,
+      "valorUnitario": 3.50
+    }
+  ]
+}

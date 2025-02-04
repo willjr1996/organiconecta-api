@@ -61,7 +61,7 @@ public class Cliente extends EntidadeAuditavel {
    @Column(nullable = false)
    private LocalDate dataNascimento;
 
-   @Column(nullable = false)
+   @Column
    private String clienteImagem;
 
 }

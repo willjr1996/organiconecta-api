@@ -7,6 +7,7 @@ import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,7 @@ public class Lojas extends EntidadeAuditavel {
    private String certificacao;
 
    @OneToOne 
+   @JoinColumn
    private Cliente cliente;
 
    @Column (nullable = false)
