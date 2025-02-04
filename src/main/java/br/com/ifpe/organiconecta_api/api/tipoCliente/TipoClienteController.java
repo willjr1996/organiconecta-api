@@ -8,15 +8,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/tipocliente")
+@Tag(
+    name = "API Tipo Cliente",
+    description = "API responsável pelos serviços de Tipo cliente no sistema"
+)
+
 public class TipoClienteController {
 
     @Autowired
     private TipoClienteService tipoClienteService;
 
-    // Criar produtor com associação à loja
+    @Operation(
+        summary = "Serviço responsável por criar produtor com associação à loja no sistema."
+    )
     @PostMapping
     public ResponseEntity<TipoCliente> save(
             @RequestBody @Valid TipoClienteRequest request) {
@@ -29,12 +38,17 @@ public class TipoClienteController {
         return new ResponseEntity<>(tipoCliente, HttpStatus.CREATED);
     }
 
-    // Listar todos os produtores
+    @Operation(
+        summary = "Serviço responsável por Listar todos os produtores no sistema."
+    )
+    // 
     @GetMapping
     public List<TipoCliente> listarTodos() {
         return tipoClienteService.listarTodos();
     }
-    // Obter produtor por ID
+    @Operation(
+        summary = "Serviço responsável por obter produtor por ID no sistema."
+    )
     @GetMapping("/{id}")
     public ResponseEntity<TipoCliente> obterPorID(@PathVariable Long id) {
         TipoCliente tipoCliente = tipoClienteService.obterPorID(id);
@@ -55,13 +69,18 @@ public class TipoClienteController {
     //     return ResponseEntity.ok().build();
     // }
 
-    // Deletar tipoCliente
+    @Operation(
+        summary = "Serviço responsável por deletar o tipoCliente no sistema."
+    )
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         tipoClienteService.delete(id);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(
+        summary = "Serviço responsável por inicializar o tipoCliente no sistema."
+    )
     @PostMapping("/inicializar")
     public ResponseEntity<Void> inicializarTipos() {
         tipoClienteService.inicializarTipos();

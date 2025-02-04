@@ -18,43 +18,69 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
 import br.com.ifpe.organiconecta_api.modelo.produto.ProdutoService;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/produto")
 @CrossOrigin
 
+@Tag(
+    name = "API Produto",
+    description = "API responsável pelos serviços de produto no sistema"
+)
+
 public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+
+    @Operation(
+        summary = "Serviço responsável por salvar um produto no sistema."
+    )
     @PostMapping
         public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
         Produto produto = produtoService.save(request.build());
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
     }
 
+    @Operation(
+        summary = "Serviço responsável por listar os produtos no sistema."
+    )
     @GetMapping
         public List<Produto> listarTodos() {
         return produtoService.listarTodos();
     }
 
+    @Operation(
+        summary = "Serviço responsável por buscar o produto pelo ID no sistema."
+    )
     @GetMapping("/{id}")
         public Produto obterPorID(@PathVariable Long id) {
         return produtoService.obterPorId(id);
     }
 
+    @Operation(
+        summary = "Serviço responsável por alterar um produto pelo seu ID no sistema."
+    )
     @PutMapping("/{id}")
         public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
         produtoService.update(id, request.build());
         return ResponseEntity.ok().build();
     }
 
+    @Operation(
+        summary = "Serviço responsável por remover um produto no sistema."
+    )
     @DeleteMapping("/{id}")
         public ResponseEntity<Void> delete(@PathVariable Long id) {
         produtoService.delete(id);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(
+        summary = "Serviço responsável por filtrar os produtos no sistema."
+    )
     @PostMapping("/filtrar")
     public List<Produto> filtrar(
         @RequestParam(value = "produtoCodigo", required = false) String produtoCodigo,

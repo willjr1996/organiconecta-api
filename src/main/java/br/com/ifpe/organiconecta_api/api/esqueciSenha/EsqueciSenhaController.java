@@ -18,9 +18,18 @@ import br.com.ifpe.organiconecta_api.modelo.acesso.PasswordResetToken;
 import br.com.ifpe.organiconecta_api.modelo.acesso.PasswordResetTokenRepository;
 import br.com.ifpe.organiconecta_api.modelo.acesso.UsuarioRepository;
 import jakarta.mail.MessagingException;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/redefinir")
 @CrossOrigin
+
+@Tag(
+    name = "API Esqueci Senha",
+    description = "API responsável pelos serviços de Esqueci Senha no sistema"
+)
+
 public class EsqueciSenhaController {
     
     @Autowired
@@ -35,6 +44,10 @@ public class EsqueciSenhaController {
     @Autowired
     private UsuarioRepository usuarioRepository;
     
+
+    @Operation(
+        summary = "Serviço responsável por recuperar senha no sistema."
+    )
     //Nessa rota, deve-se colocar o email para procurar se existe no banco. Se existir o email será enviado com o link para redefinição.
     @PostMapping("/esqueci-senha")
     public ResponseEntity<String> esqueciSenha(@RequestParam String email) throws MessagingException {
@@ -46,6 +59,9 @@ public class EsqueciSenhaController {
         return ResponseEntity.badRequest().body("Conta não encontrada.");
     }
 
+    @Operation(
+        summary = "Serviço responsável por gerar o token e a recuperação de senha do cliente no sistema."
+    )
     //Nessa rota, o token é colocado e a nova senha é trocada no banco. O token vem pela url e por json será colocada a nova senha
     @PostMapping("/resetar-senha")
     public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody String newPassword) {

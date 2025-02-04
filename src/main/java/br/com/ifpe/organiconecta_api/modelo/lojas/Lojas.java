@@ -2,6 +2,7 @@ package br.com.ifpe.organiconecta_api.modelo.lojas;
 
 import org.hibernate.annotations.SQLRestriction;
 
+
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;

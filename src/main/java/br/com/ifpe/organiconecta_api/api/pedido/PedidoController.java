@@ -24,9 +24,18 @@ import br.com.ifpe.organiconecta_api.modelo.pedido.PedidoService;
 import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
 import br.com.ifpe.organiconecta_api.modelo.produto.ProdutoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/pedido")
 @CrossOrigin
+
+@Tag(
+    name = "API de Pedido",
+    description = "API responsável pelos pedidos no sistema"
+)
+
 public class PedidoController {
 
     @Autowired
@@ -38,6 +47,9 @@ public class PedidoController {
     @Autowired
     private ProdutoService produtoService;
 
+    @Operation(
+        summary = "Serviço responsável por salvar um pedido no sistema."
+    )
     @PostMapping
     public ResponseEntity<Pedido> salvarPedido(@RequestBody @Valid PedidoRequest pedidoRequest) {
         
@@ -70,13 +82,18 @@ public class PedidoController {
         return new ResponseEntity<>(pedido, HttpStatus.CREATED);
     }
 
+    @Operation(
+        summary = "Serviço responsável por consultar o pedido de um cliente no sistema."
+    )
     @GetMapping("/cliente/{clienteId}")
     public ResponseEntity<List<Pedido>> listarPedidosPorCliente(@PathVariable Long clienteId) {
         List<Pedido> pedidos = pedidoService.listarPedidosPorCliente(clienteId);
         return ResponseEntity.ok(pedidos);
     }
     
-    //Remove o pedido pelo IdPedido, se pertencer ao cliente determinado pelo ClienteoID
+    @Operation(
+        summary = "Serviço responsável por remover um pedido de um determinado cliente no sistema."
+    )
     @DeleteMapping("/{pedidoId}/cliente/{clienteId}")
     public ResponseEntity<Void> excluirPedidoDeCliente(
             @PathVariable Long pedidoId,
