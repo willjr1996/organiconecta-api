@@ -15,12 +15,12 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("OxeFood API")
+                        .title("Organiconecta API")
                         .version("1.0")
-                        .description("API do OxeFood")
+                        .description("API do Organiconecta")
                         .contact(new Contact()
-                                .name("Aluno IFPE")
-                                .email("aluno@discente.ifpe.edu.br")));
+                                .name("Organiconecta")
+                                .email("organiconecta@gmail.com")));
     }
 
     @Bean

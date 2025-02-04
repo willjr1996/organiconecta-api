@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ifpe.organiconecta_api.modelo.acesso.UsuarioService;
 //import br.com.ifpe.organiconecta_api.api.pedido.PedidoRequest;
 // import br.com.ifpe.organiconecta_api.modelo.cliente.Credenciais;
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
@@ -36,6 +37,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class ClienteController {
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Operation(
         summary = "Serviço responsável por salvar um cliente no sistema."
@@ -76,6 +80,7 @@ public class ClienteController {
     @DeleteMapping("/{id}")
         public ResponseEntity<Void> delete(@PathVariable Long id) {
         clienteService.delete(id);
+        usuarioService.delete(id);
         return ResponseEntity.ok().build();
     }
 

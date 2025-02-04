@@ -2,6 +2,8 @@ package br.com.ifpe.organiconecta_api.api.acesso;
 
 import java.util.HashMap;
 import java.util.Map;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,11 @@ import br.com.ifpe.organiconecta_api.modelo.seguranca.JwtService;
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin
+@Tag(
+    name = "API Atenticação",
+    description = "Autenticação do sistema"
+)
+
 public class AuthenticationController {
 
     private final JwtService jwtService;
@@ -27,7 +34,10 @@ public class AuthenticationController {
         this.jwtService = jwtService;
         this.usuarioService = usuarioService;
     }
-
+    
+    @Operation(
+        summary = "Serviço responsável por autenticar um usuário no sistema.",
+        description = "Exemplo de descrição de um endpoint responsável por autenticar um usuário no sistema.")
     @PostMapping
     public Map<Object, Object> signin(@RequestBody AuthenticationRequest data) {
     

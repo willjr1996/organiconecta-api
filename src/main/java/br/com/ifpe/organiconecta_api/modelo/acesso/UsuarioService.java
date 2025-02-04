@@ -29,6 +29,7 @@ public class UsuarioService implements UserDetailsService {
         this.repository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     public Usuario authenticate(String username, String password) {
 
         authenticationManager.authenticate(
@@ -55,5 +56,14 @@ public class UsuarioService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setHabilitado(Boolean.TRUE);
         return repository.save(user);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Usuario usuario = repository.findById(id).get();
+
+        usuario.setHabilitado(Boolean.FALSE);
+        repository.save(usuario);
+
     }
 }

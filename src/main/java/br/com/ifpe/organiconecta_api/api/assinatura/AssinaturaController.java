@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin
 @Tag(
     name = "API Assinatura",
-    description = "API responsável pelos servidos de cliente no sistema"
+    description = "API responsável pelos serviços de assinatuda no sistema"
 )
 
 public class AssinaturaController {

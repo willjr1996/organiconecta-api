@@ -20,7 +20,7 @@ import java.util.List;
 
 @Tag(
     name = "API Loja",
-    description = "API responsável pelos servidos de lojas no sistema"
+    description = "API responsável pelos serviços de lojas no sistema"
 )
 
 public class LojasController {
@@ -50,7 +50,7 @@ public class LojasController {
     }
 
     @Operation(
-        summary = "Serviço responsável por listar todas as loja no sistema."
+        summary = "Serviço responsável por listar todas as lojas no sistema."
     )
     @GetMapping
     public List<Lojas> listarTodos() {

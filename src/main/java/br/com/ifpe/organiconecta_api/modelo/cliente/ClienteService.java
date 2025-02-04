@@ -121,7 +121,7 @@ public class ClienteService {
     @Transactional
     public void delete(Long id) {
         Cliente cliente = repository.findById(id).get();
-
+        
         cliente.setHabilitado(Boolean.FALSE);
         repository.save(cliente);
 
