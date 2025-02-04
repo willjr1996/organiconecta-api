@@ -101,6 +101,7 @@ public class ClienteService {
         cliente.setTelefone(clienteAlterado.getTelefone());
         cliente.setCpf(clienteAlterado.getCpf());
         cliente.setDataNascimento(clienteAlterado.getDataNascimento());
+        cliente.setClienteImagem(clienteAlterado.getClienteImagem());
 
         // if (cliente.getAssinatura() != null && cliente.getAssinatura().getTipoPlano()
         // != null) {

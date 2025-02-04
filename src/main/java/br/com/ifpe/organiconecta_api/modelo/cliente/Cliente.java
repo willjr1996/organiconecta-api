@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.tipoCliente.TipoCliente;
 import br.com.ifpe.organiconecta_api.util.entity.EntidadeAuditavel;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -58,5 +60,8 @@ public class Cliente extends EntidadeAuditavel {
 
    @Column(nullable = false)
    private LocalDate dataNascimento;
+
+   @Column(nullable = false)
+   private String clienteImagem;
 
 }

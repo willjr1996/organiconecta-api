@@ -11,6 +11,7 @@ import br.com.ifpe.organiconecta_api.modelo.acesso.Usuario;
 import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +47,8 @@ public class ClienteRequest {
     @NotBlank(message = "A senha é de preenchimento obrigatório")
     private String password;
 
+    private String clienteImagem;
+
     public Usuario buildUsuario() {
         return Usuario.builder()
             .username(email)
@@ -61,6 +64,7 @@ public class ClienteRequest {
         .telefone(telefone)
         .cpf(cpf)
         .dataNascimento(dataNascimento)
+        .clienteImagem(clienteImagem)
         .build();
 }
 
