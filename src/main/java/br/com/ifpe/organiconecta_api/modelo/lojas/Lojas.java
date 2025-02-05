@@ -43,10 +43,10 @@ public class Lojas extends EntidadeAuditavel {
    @JoinColumn
    private Cliente cliente;
 
-   @Column (nullable = false)
+   @Column 
    private String perfilLojaImagem;
 
-   @Column (nullable = false)
+   @Column 
    private String capaLojaImagem;
    
   

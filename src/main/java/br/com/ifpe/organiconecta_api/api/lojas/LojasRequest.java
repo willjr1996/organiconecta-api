@@ -26,10 +26,10 @@ public class LojasRequest {
     @NotBlank(message = "A certificação é obrigatória.")
     private String certificacao;
 
-    @NotBlank(message = "A imagem da capa da Loja é obrigatória.")
+    //@NotBlank(message = "A imagem da capa da Loja é obrigatória.")
     private String capaLojaImagem;
 
-    @NotBlank(message = "A imagem do perfil da Loja é obrigatória.")
+    //@NotBlank(message = "A imagem do perfil da Loja é obrigatória.")
     private String perfilLojaImagem;
 
     private Long idCliente;

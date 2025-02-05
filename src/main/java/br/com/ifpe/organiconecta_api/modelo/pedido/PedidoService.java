@@ -12,6 +12,8 @@ import br.com.ifpe.organiconecta_api.modelo.cliente.Cliente;
 import br.com.ifpe.organiconecta_api.modelo.cliente.ClienteService;
 import br.com.ifpe.organiconecta_api.modelo.itemPedido.ItemPedido;
 import br.com.ifpe.organiconecta_api.modelo.itemPedido.ItemPedidoRepository;
+import br.com.ifpe.organiconecta_api.modelo.pagamento.Pagamento;
+import br.com.ifpe.organiconecta_api.modelo.pagamento.PagamentoService;
 import br.com.ifpe.organiconecta_api.modelo.produto.Produto;
 import br.com.ifpe.organiconecta_api.modelo.produto.ProdutoService;
 
@@ -26,9 +28,12 @@ public class PedidoService {
 
     @Autowired
     private ClienteService clienteService;
-    
+
     @Autowired
     private ProdutoService produtoService;
+
+    @Autowired
+    private PagamentoService pagamentoService;
 
     @Transactional
     public Pedido salvarPedido(Pedido pedido) {
@@ -66,6 +71,11 @@ public class PedidoService {
 
             itemPedidoRepository.save(itemPedido);
         }
+
+        Pagamento pagamento = new Pagamento();
+        pagamento.setPedido(pedidoSalvo);
+        pagamento.setPagamentoFeito(Boolean.TRUE);
+        pagamentoService.save(pagamento);
 
         return pedidoSalvo;
     }

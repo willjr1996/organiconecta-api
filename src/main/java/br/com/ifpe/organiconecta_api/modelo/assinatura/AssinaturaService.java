@@ -25,9 +25,6 @@ public class AssinaturaService {
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private UsuarioService usuarioService;
-
-    @Autowired
     private TipoClienteRepository tipoClienteRepository;
 
     @Autowired

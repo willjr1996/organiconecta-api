@@ -35,9 +35,11 @@ public class PagamentoService {
     public void update(Long id, Pagamento pagamentoAlterado) {
         
         Pagamento pagamento = repository.findById(id).get();
-        pagamento.setTipoPagamento(pagamentoAlterado.getTipoPagamento());
-        pagamento.setModalidade(pagamentoAlterado.getModalidade());
-        pagamento.setCartao(pagamentoAlterado.getCartao());
+        pagamento.setPagamentoFeito(pagamentoAlterado.getPagamentoFeito());
+        // pagamento.setTipoPagamento(pagamentoAlterado.getTipoPagamento());
+        // pagamento.setModalidade(pagamentoAlterado.getModalidade());
+        // pagamento.setCartao(pagamentoAlterado.getCartao());
+
        
 
         repository.save(pagamento);

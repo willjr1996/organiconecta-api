@@ -12,22 +12,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PagamentoRequest {
+
+    @NotBlank(message = "Realização do pagamento e obrigatório.")
+    private Boolean pagamentoFeito;
    
-    @NotBlank(message = "A escolha do tipo de pagamento é obrigatória.")
-    private String tipoPagamento;
+    // @NotBlank(message = "A escolha do tipo de pagamento é obrigatória.")
+    // private String tipoPagamento;
     
-    @NotBlank(message = "A escolha do tipo de modalidade é obrigatória.")
-    private String modalidade;
+    // @NotBlank(message = "A escolha do tipo de modalidade é obrigatória.")
+    // private String modalidade;
     
-    @NotBlank(message = "A escolha do cartão é obrigatória.")
-    private String cartao;
+    // @NotBlank(message = "A escolha do cartão é obrigatória.")
+    // private String cartao;
 
     public Pagamento build() {
 
         return Pagamento.builder()
-                .tipoPagamento(tipoPagamento)
-                .modalidade(modalidade)
-                .cartao(cartao)
+                .pagamentoFeito(pagamentoFeito)
+                // .tipoPagamento(tipoPagamento)
+                // .modalidade(modalidade)
+                // .cartao(cartao)
                 .build();
     }
 }

@@ -35,19 +35,21 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(c -> c.disable())
-                .authorizeHttpRequests(authorize -> authorize
-
-                        .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/tipocliente/inicializar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api-docs/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/administrador").permitAll()
-
+            
+            http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(c -> c.disable())
+            .authorizeHttpRequests(authorize -> authorize
+            
+            .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/tipocliente/inicializar").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api-docs/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/swagger-ui/*").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/administrador").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/produto").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/produto/*").permitAll()
+            
                         // PERMISSÕES DE ACESSO DE CLIENTE
                         .requestMatchers(HttpMethod.PUT, "/api/cliente/*").hasAnyAuthority(
                                 Perfil.ROLE_CLIENTE,
@@ -72,6 +74,7 @@ public class SecurityConfiguration {
                                 Perfil.ROLE_FUNCIONARIO_USER,
                                 Perfil.ROLE_CLIENTE_PRODUTOR)
 
+
                         // PERMISSÕES DE ACESSO DE PRODUTO
                         .requestMatchers(HttpMethod.POST, "/api/produto").hasAnyAuthority(
                                 Perfil.ROLE_FUNCIONARIO_ADMIN,
@@ -87,15 +90,7 @@ public class SecurityConfiguration {
                                 Perfil.ROLE_FUNCIONARIO_ADMIN,
                                 Perfil.ROLE_CLIENTE_PRODUTOR)
 
-                        .requestMatchers(HttpMethod.GET, "/api/produto").hasAnyAuthority(
-                                Perfil.ROLE_CLIENTE,
-                                Perfil.ROLE_FUNCIONARIO_ADMIN,
-                                Perfil.ROLE_CLIENTE_PRODUTOR)
 
-                        .requestMatchers(HttpMethod.GET, "/api/produto/*").hasAnyAuthority(
-                                Perfil.ROLE_CLIENTE,
-                                Perfil.ROLE_FUNCIONARIO_ADMIN,
-                                Perfil.ROLE_CLIENTE_PRODUTOR)
 
                         // PERMISSÕES DE ACESSO DE TIPOCLIENTE
                         .requestMatchers(HttpMethod.GET, "/api/tipocliente").hasAnyAuthority(

@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 
 @RestController
-@RequestMapping("   ")
+@RequestMapping("/api/loja")
 @CrossOrigin
 
 @Tag(
