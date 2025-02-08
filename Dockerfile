@@ -24,7 +24,5 @@ ENTRYPOINT [ "java", "-jar", "/app/organiconecta-api-0.0.1-SNAPSHOT.jar" ]
 # ./mvnw package 
 # docker login 
 # docker build -t organiconecta .
-# docker tag organiconecta willjunior1996/organiconecta
+# docker tag organiconecta willjr1996/organiconecta
 # docker push organiconecta
-
-# https://organiconecta.onrender.com/
